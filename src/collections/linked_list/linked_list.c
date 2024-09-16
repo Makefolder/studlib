@@ -20,7 +20,8 @@ int main(void)
     pop_linkedlist(list);
 
     print_linkedlist(list);
-    deinit_linkedlist(list);
+
+    deinit_linkedlist(&list);
     return 0;
 }
 
@@ -82,18 +83,18 @@ int append_linkedlist(LinkedList *const list, const void *value)
     return 0;
 }
 
-int deinit_linkedlist(LinkedList *list)
+int deinit_linkedlist(LinkedList **list)
 {
-    if (list == NULL)
+    if (list == NULL || *list == NULL)
         return -1;
-    Node *ptr = list->next;
+    Node *ptr = (*list)->next;
     while (ptr != NULL) {
         Node *next = ptr->next;
-        _deinit_node(list, ptr);
+        _deinit_node(*list, ptr);
         ptr = next;
     }
-    free(list);
-    list = NULL;
+    free(*list);
+    *list = NULL;
     return 0;
 }
 

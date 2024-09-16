@@ -28,7 +28,7 @@ void print_linkedlist(const LinkedList *list);
 LinkedList* init_linkedlist(size_t value_size);
 
 // Destroy linked list and its contents
-int deinit_linkedlist(LinkedList *list);
+int deinit_linkedlist(LinkedList **list);
 
 // Get length of linked list
 unsigned length_linkedlist(const LinkedList *const list);
