@@ -32,6 +32,7 @@ int main(void)
         return -1;
     }
 
+    puts("The logical end of the program.");
     return 0;
 }
 
@@ -48,7 +49,7 @@ int deinit_node(Node *node)
 {
     if (node == NULL)
         return -1;
-    free(node->value);
+    free((void *) node->value);
     free(node);
     return 0;
 }
@@ -86,7 +87,7 @@ int deinit_linkedlist(LinkedList *const list)
     Node *ptr = list->next;
     while (ptr != NULL) {
         Node *next = ptr->next;
-        free(ptr);
+        deinit_node(ptr);
         ptr = next;
     }
     free(list);
