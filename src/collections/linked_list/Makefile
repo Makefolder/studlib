@@ -1,13 +1,13 @@
 all:
-	clear
-	cc -Wall -Werror -Wextra -pedantic -std=c99 -g -fsanitize=address linked_list.c -o test.out
-	@echo ""
-	@./test.out
-	@echo ""
+	@clear
+	cc -Wall -Werror -O0 -Wextra -pedantic -std=c99 -g linked_list.c -o test.a
+
+leaks: clean all
+	@leaks --atExit -- ./test.a
 
 clean:
-	rm -rf test.out.dSYM
-	rm test.out
+	@rm -rf test.a.dSYM
+	@rm test.a
 
 rebuild: clean all
 

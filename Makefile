@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-g -Wall -Werror -Wextra -pedantic -std=c99
+CFLAGS=-g -O0 -Wall -Werror -Wextra -pedantic -std=c99
 LIBNAME=matelib
 LIBFILE=lib$(LIBNAME).a
 
