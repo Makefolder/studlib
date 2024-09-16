@@ -2,3 +2,4 @@
 /build/include/*
 
 !.keep
+.DS_Store

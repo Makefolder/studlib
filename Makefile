@@ -4,7 +4,7 @@ COLLECTIONS=./src/collections
 ALGORITHMS=./src/algs
 
 all:
-	$(CC) $(CFLAGS) ./src/linked_list.c -o ./build/lib/linked_list.a
+	$(CC) $(CFLAGS) $(COLLECTIONS)/linked_list/linked_list.c -o ./build/lib/linked_list.a
 
 clean:
 	@rm -rf ./build/lib/*

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "linked_list.h"
@@ -58,8 +57,16 @@ LinkedList* init_linkedlist(size_t value_size)
 {
     LinkedList *list = (LinkedList *) malloc(sizeof(LinkedList));
     list->value_size = value_size;
+    list->size = 0;
     list->next = NULL;
     return list;
+}
+
+unsigned length_linkedlist(const LinkedList *const list)
+{
+    if (list == NULL)
+        return 0;
+    return list->size;
 }
 
 int append_linkedlist(LinkedList *const list, const void *value)
@@ -70,13 +77,14 @@ int append_linkedlist(LinkedList *const list, const void *value)
     if (list->next == NULL)
     {
         list->next = init_node(list, value);
+        list->size += 1;
         return 0;
     }
-
     Node *next = list->next;
     while (next->next != NULL)
         next = next->next;
     next->next = init_node(list, value);
+    list->size += 1;
     return 0;
 }
 
@@ -106,7 +114,12 @@ void print_linkedlist(const LinkedList *list)
     Node *next = list->next;
     while (next != NULL)
     {
-        printf("value: %d, next: %p\n", *(int *) next->value, (void *) next->next);
+        printf("size: %u, value: %d, next: %p\n", list->size, *(int *) next->value, (void *) next->next);
         next = next->next;
     }
+}
+
+int pop_linkedlist(LinkedList *const list)
+{
+    return 0;
 }
