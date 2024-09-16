@@ -20,6 +20,8 @@ int bubble_sort(void *const arr, size_t size);
 Header file for LinkedList:
 
 ```C
+#ifndef linked_list
+
 typedef struct Node
 {
     const void *value;
@@ -33,21 +35,27 @@ typedef struct
     Node* next;
 } LinkedList;
 
-Node* init_node(const LinkedList *list, const void *value);
-
-int deinit_node(Node *node);
-
-void print_linkedlist(const LinkedList *list);
-
+// Make linked list
 LinkedList* init_linkedlist(size_t value_size);
 
+// Destroy linked list and its contents
+int deinit_linkedlist(LinkedList *list);
+
+// Get length of linked list
 unsigned length_linkedlist(const LinkedList *const list);
 
+// Append node to the end (Content gets copied into linked list)
 int append_linkedlist(LinkedList *const list, const void *value);
 
+// Insert node as first (Content gets copied into linked list)
 int insert_linkedlist(LinkedList *const list, const void *value);
 
-int pop_linkedlist(LinkedList *const list);
+// Get and remove first node
+Node pop_linkedlist(LinkedList *const list);
 
-int deinit_linkedlist(LinkedList *const list);
+// Remove last node
+int remove_linkedlist(LinkedList *const list);
+
+#endif
+
 ```
