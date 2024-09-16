@@ -1,17 +1,29 @@
 CC=cc
 CFLAGS=-g -Wall -Werror -Wextra -pedantic -std=c99
-COLLECTIONS=./src/collections
-ALGORITHMS=./src/algs
+LIBNAME=matelib
+LIBFILE=lib$(LIBNAME).a
 
-all:
-	$(CC) $(CFLAGS) $(COLLECTIONS)/linked_list/linked_list.c -o ./build/lib/linked_list.a
+HEADERS=$(shell find src -name '*.h')
+SRCS=$(shell find src -name '*.c')
+OBJS=$(SRCS:src/%.c=build/obj/%.o)
+
+all: $(LIBFILE)
+
+$(LIBFILE): $(OBJS)
+	@echo "Assembling library..."
+	ar rcs ./build/lib/$@ $(OBJS)
+	cp -r $(HEADERS) ./build/include/
+
+build/obj/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	@echo "Compiling $< to $@"
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf ./build/lib/*
 	@rm -rf ./build/include/*
+	@rm -rf ./build/obj/*
 
-debug:
-	@$(CC) $(CFLAGS) -fsanitize=address $(COLLECTIONS)/linked_list/linked_list.c -o ./build/lib/linked_list.a
-	@./build/lib/linked_list.a
+rebuild: clean all
 
 .PHONY: all clean

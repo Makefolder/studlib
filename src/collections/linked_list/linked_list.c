@@ -2,39 +2,6 @@
 #include <string.h>
 #include "linked_list.h"
 
-int main(void)
-{
-    LinkedList *list = init_linkedlist(sizeof(int));
-
-    if (list == NULL)
-        return -1;
-
-    int x = 524;
-    int y = 762;
-    int z = 468;
-    int k = -24;
-    int i = 0;
-    int n = 01;
-
-    append_linkedlist(list, &x);
-    append_linkedlist(list, &y);
-    append_linkedlist(list, &z);
-    append_linkedlist(list, &k);
-    append_linkedlist(list, &i);
-    append_linkedlist(list, &n);
-
-    print_linkedlist(list);
-
-    if (deinit_linkedlist(list) != 0)
-    {
-        puts("Deinit failed.");
-        return -1;
-    }
-
-    puts("The logical end of the program.");
-    return 0;
-}
-
 Node* init_node(const LinkedList *list, const void *value)
 {
     Node *node = (Node *) malloc(sizeof(Node));
@@ -121,5 +88,7 @@ void print_linkedlist(const LinkedList *list)
 
 int pop_linkedlist(LinkedList *const list)
 {
+    if (list == NULL)
+        return -1;
     return 0;
 }

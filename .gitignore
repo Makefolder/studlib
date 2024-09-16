@@ -1,5 +1,6 @@
 /build/lib/*
 /build/include/*
+/build/obj/*
 
 !.keep
 .DS_Store
