@@ -1,6 +1,6 @@
 CC=cc
 CFLAGS=-g -O0 -Wall -Werror -Wextra -pedantic -std=c99
-LIBNAME=matelib
+LIBNAME=studlib
 LIBFILE=lib$(LIBNAME).a
 
 HEADERS=$(shell find src -name '*.h')

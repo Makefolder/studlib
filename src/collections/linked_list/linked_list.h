@@ -2,7 +2,8 @@
 
 #include <stdio.h>
 
-#define _CHECK_NULL(ptr) do { if ((ptr) == NULL) return -1; } while(0)
+#define _CHECK_NULL(ptr) do { if ((ptr) == NULL) return -1; } while (0)
+#define _CHECK_NULL_RETURN(ptr, type) do { if ((ptr) == NULL) return type; } while (0)
 
 typedef struct Node
 {
@@ -18,27 +19,30 @@ typedef struct
 } LinkedList;
 
 // Not for external usage (at least I didn't mean that)
-Node* _init_node(const LinkedList *list, const void *const value);
+Node* _init_node (const LinkedList *list, const void *const value);
 
 // Not for external usage (at least I didn't mean that)
-int _deinit_node(LinkedList *const list, Node *node);
+int _deinit_node_from_list (LinkedList *const list, Node *node);
+
+// Deinit popped node
+int deinit_node (Node *node);
 
 // Make linked list
-LinkedList* init_linkedlist(size_t value_size);
+LinkedList* init_linkedlist (size_t value_size);
 
 // Destroy linked list and its contents
-int deinit_linkedlist(LinkedList **const list);
+int deinit_linkedlist (LinkedList **const list);
 
 // Append node to the end (Content gets copied into linked list)
-int append_linkedlist(LinkedList *const list, const void *value);
+int append_linkedlist (LinkedList *const list, const void *value);
 
 // Insert node as first (Content gets copied into linked list)
-int insert_linkedlist(LinkedList *const list, const void *value);
+int insert_linkedlist (LinkedList *const list, const void *value);
 
 // Get and remove first node
-Node pop_linkedlist(LinkedList *const list);
+Node* pop_linkedlist (LinkedList *const list);
 
 // Remove last node in linked list
-int remove_last_linkedlist(LinkedList *const list);
+int remove_last_linkedlist (LinkedList *const list);
 
 #endif

@@ -6,22 +6,35 @@ Node* _init_node (const LinkedList *list, const void *const value)
 {
     Node *node = (Node *) malloc (sizeof (Node));
     node->next = NULL;
-    node->value = malloc (list->value_size);
-    memcpy (node->value, value, list->value_size);
+    if (value != NULL)
+    {
+        node->value = malloc (list->value_size);
+        memcpy (node->value, value, list->value_size);
+    }
     return node;
 }
 
-int _deinit_node (LinkedList *const list, Node *node)
+int _deinit_node_from_list (LinkedList *const list, Node *node)
 {
-    _CHECK_NULL(list);
-    _CHECK_NULL(node);
-    free ((void *) node->value);
+    _CHECK_NULL (list);
+    _CHECK_NULL (node);
+    if (node->value != NULL)
+        free (node->value);
     node->value = NULL;
     if (list->next == node)
         list->next = NULL;
     free (node);
     if (list->size > 0)
         list->size -= 1;
+    return 0;
+}
+
+int deinit_node (Node *node)
+{
+    _CHECK_NULL (node);
+    if (node->value != NULL)
+        free (node->value);
+    free (node);
     return 0;
 }
 
@@ -36,12 +49,12 @@ LinkedList* init_linkedlist (size_t value_size)
 
 int deinit_linkedlist (LinkedList **const list)
 {
-    _CHECK_NULL(list);
-    _CHECK_NULL(*list);
+    _CHECK_NULL (list);
+    _CHECK_NULL (*list);
     Node *ptr = (*list)->next;
     while (ptr != NULL) {
         Node *next = ptr->next;
-        _deinit_node (*list, ptr);
+        _deinit_node_from_list (*list, ptr);
         ptr = next;
     }
     free (*list);
@@ -51,7 +64,7 @@ int deinit_linkedlist (LinkedList **const list)
 
 int append_linkedlist (LinkedList *const list, const void *value)
 {
-    _CHECK_NULL(list);
+    _CHECK_NULL (list);
     if (list->next == NULL)
     {
         list->next = _init_node (list, value);
@@ -68,8 +81,8 @@ int append_linkedlist (LinkedList *const list, const void *value)
 
 int insert_linkedlist (LinkedList *const list, const void *value)
 {
-    _CHECK_NULL(list);
-    _CHECK_NULL(value);
+    _CHECK_NULL (list);
+    _CHECK_NULL (value);
     if (list->next == NULL)
     {
         int result = append_linkedlist (list, value);
@@ -80,24 +93,23 @@ int insert_linkedlist (LinkedList *const list, const void *value)
     {
         // leak leak leak
         Node *node = _init_node (list, value);
-        _CHECK_NULL(node);
+        _CHECK_NULL (node);
         Node *temp = list->next;
         node->next = temp;
         list->next = node;
+        list->size++;
     }
     return 0;
 }
 
-Node pop_linkedlist (LinkedList *const list)
+Node* pop_linkedlist (LinkedList *const list)
 {
-    Node node = {
-        .value = NULL,
-        .next = NULL,
-    };
-    if (list == NULL || list->next == NULL)
-        return node;
+    _CHECK_NULL_RETURN (list, NULL);
+    _CHECK_NULL_RETURN (list->next, NULL);
+    Node *node = (Node *) malloc (sizeof (Node));
+    node->next = NULL;
 
-    node.value = list->next->value;
+    node->value = list->next->value;
     Node *popped = list->next;
     list->next = popped->next;
 
@@ -110,7 +122,7 @@ Node pop_linkedlist (LinkedList *const list)
 
 int remove_last_linkedlist (LinkedList *const list)
 {
-    _CHECK_NULL(list);
+    _CHECK_NULL (list);
     if (list->size == 0)
         return -1;
     if (list->size == 1)
