@@ -1,10 +1,5 @@
 #ifndef stud_strings
 
-// number in bits
-//
-// unicode allows as much
-// as 21 bits
-#define _FIXED_CHUNK 21;
 #define prints(string) printf("%s\n", string);
 
 #include <stdio.h>

@@ -10,14 +10,30 @@ Basically all functions return -1 if fail and 0 if success.
 
 ### Navigation
 - [Algorithms](#algorithms)
-  - [Bubble sorting](#bubble-sorting)
-  - [Merge sorting](#merge-sorting)
+  - [Search](#searching)
+    - [Linear search](#linear-search)
+  - [Sorting](#sorting)
+    - [Bubble sorting](#bubble-sorting)
+    - [Merge sorting](#merge-sorting)
 - [Collections](#collections)
   - [Linked Lists](#linked-lists)
   - [Stacks](#stacks)
 - [Strings (WIP)](#strings)
 
 ## Algorithms
+
+## Searching
+
+### Linear sorting
+
+Header file:
+
+```C
+// Returns index of the target in arr. If fails to find, returns -1
+int linear_search (const int arr[], size_t len, int target);
+```
+
+## Sorting
 
 ### Bubble sorting
 
