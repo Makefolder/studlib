@@ -2,5 +2,12 @@
 /build/include/*
 /build/obj/*
 
+/src/**/Makefile
+
 !.keep
 .DS_Store
+
+*.a.dSYM
+*.a
+*.out
+*.out.dSYM

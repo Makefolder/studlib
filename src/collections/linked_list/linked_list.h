@@ -37,7 +37,7 @@ int deinit_linkedlist (LinkedList **const list);
 int append_linkedlist (LinkedList *const list, const void *value);
 
 // Insert node as first (Content gets copied into linked list)
-int insert_linkedlist (LinkedList *const list, const void *value);
+int push_linkedlist (LinkedList *const list, const void *value);
 
 // Get and remove first node
 Node* pop_linkedlist (LinkedList *const list);

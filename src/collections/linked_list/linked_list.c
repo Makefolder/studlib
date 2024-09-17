@@ -79,7 +79,7 @@ int append_linkedlist (LinkedList *const list, const void *value)
     return 0;
 }
 
-int insert_linkedlist (LinkedList *const list, const void *value)
+int push_linkedlist (LinkedList *const list, const void *value)
 {
     _CHECK_NULL (list);
     _CHECK_NULL (value);

@@ -6,7 +6,7 @@
 </div>
 
 Simple "STD" lib for C. <br />
-All functions return -1 if fail and 0 if success.
+Basically all functions return -1 if fail and 0 if success.
 
 ## Algorithms
 
@@ -50,7 +50,7 @@ int deinit_linkedlist (LinkedList **const list);
 int append_linkedlist (LinkedList *const list, const void *value);
 
 // Insert node as first (Content gets copied into linked list)
-int insert_linkedlist (LinkedList *const list, const void *value);
+int push_linkedlist (LinkedList *const list, const void *value);
 
 // Remove last node in linked list
 int remove_last_linkedlist (LinkedList *const list);
@@ -60,6 +60,32 @@ Node* pop_linkedlist (LinkedList *const list);
 
 // Deinit popped node
 int deinit_node (Node *node);
+
+#endif
+```
+
+### Stacks
+
+Initial stack capacity is `sizeof (void *)` * 32.
+Header file for Stack:
+
+```C
+#ifndef stack
+
+typedef struct {
+    size_t stack_capacity;
+    size_t stack_size;
+    void **stack_values; // array of values
+} Stack;
+
+Stack* init_stack (void);
+
+// pushes an item in front of entire array (stack_values)
+// copies passed value
+int push_stack (Stack *const stack, const void *const src, size_t src_size);
+
+// get the first item in stack
+void* pop_stack (Stack *const stack);
 
 #endif
 ```
