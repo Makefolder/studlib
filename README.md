@@ -8,6 +8,14 @@
 Simple "STD" lib for C. <br />
 Basically all functions return -1 if fail and 0 if success.
 
+### Navigation
+- [Algorithms](#algorithms)
+  - [Bubble sorting](#bubble-sorting)
+- [Collections](#collections)
+  - [Linked Lists](#linked-lists)
+  - [Stacks](#stacks)
+- [Strings (WIP)](#strings)
+
 ## Algorithms
 
 ### Bubble sorting
