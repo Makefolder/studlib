@@ -67,7 +67,7 @@ int remove_last_linkedlist (LinkedList *const list);
 Node* pop_linkedlist (LinkedList *const list);
 
 // Deinit popped node
-int deinit_node (Node *node);
+int deinit_node (Node **node);
 
 #endif
 ```
@@ -97,3 +97,51 @@ void* pop_stack (Stack *const stack);
 
 #endif
 ```
+
+## Strings
+
+### WORK IN PROCESS! THIS IS ONLY NOTED IDEA!
+
+### Supporting unicode
+
+The blessed header file for strings:
+
+```C
+#ifndef stud_strings
+
+#define prints(string) printf("%s\n", string);
+
+// just regular ASCII string
+// to get its length use `strlen ()`
+// from `#include <strings.h>`
+typedef char* string;
+
+// Unicode char
+typedef char* unicode;
+
+// string of unicode chars
+typedef unicode* unicode_str;
+
+// We have a program that takes a char and returns it into terminal
+// input: å
+// output: ?
+//
+// in the standart C, `char` supports only ASCII.
+unicode_str str_into_unicode (string *string, size_t string_size);
+
+#endif
+```
+
+### But how to use it?
+
+TODO EXAMPLES OF ITS USAGE
+
+## PS
+
+If anyone uses this library, please report any bugs or memory leaks.
+
+<div align="center">
+  <a href="https://choosealicense.com/licenses/mit/">
+    <b>MIT</b>
+  <a/>
+<div/>

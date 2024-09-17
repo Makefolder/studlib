@@ -25,7 +25,7 @@ Node* _init_node (const LinkedList *list, const void *const value);
 int _deinit_node_from_list (LinkedList *const list, Node *node);
 
 // Deinit popped node
-int deinit_node (Node *node);
+int deinit_node (Node **node);
 
 // Make linked list
 LinkedList* init_linkedlist (size_t value_size);

@@ -2,27 +2,24 @@
 
 #include <stdio.h>
 
-#define _INITIAL_STACK_SIZE 32
+#define _INITIAL_STACK_SIZE 4
 
-// FILO - First IN Last OUT
-// GTA V <- pop
-// GTA IV <- then
-// Skyrim <- then
-// Minecraft <- first
-//
 typedef struct {
-    size_t stack_capacity;
-    size_t stack_size;
-    void **stack_values; // array of values
+    size_t capacity;
+    size_t size;
+    // array of pointer to the values
+    void **values;
 } Stack;
 
 Stack* init_stack (void);
+int deinit_stack (Stack **stack);
 
 // pushes an item in front of entire array (stack_values)
 // copies passed value
 int push_stack (Stack *const stack, const void *const src, size_t src_size);
 
 // get the first item in stack
+// DONT FORGET TO FREE RETURNED VALUE!
 void* pop_stack (Stack *const stack);
 
 #endif

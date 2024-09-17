@@ -3,61 +3,74 @@
 #include <stdio.h>
 #include "stack.h"
 
-void print_stack (Stack *stack, size_t size)
-{
-    if (stack == NULL)
-        return ;
-    else if (stack->stack_size == 0)
-    {
-        puts ("Stack is empty!");
-        return ;
-    }
-    for (size_t i = 0; i < size; i++)
-        printf ("index[%zu]: %c\n", i, *(char *) stack->stack_values[i]);
-}
-
-int main (void)
-{
-    Stack *stack = init_stack ();
-
-    char n = 'n';
-    // char a = 'a';
-
-    push_stack (stack, &n, sizeof (char));
-    // push_stack (stack, &a, sizeof (char));
-    // push_stack (stack, &n, sizeof (char));
-
-    print_stack (stack, stack->stack_size);
-    return 0;
-}
-
 Stack* init_stack (void)
 {
     Stack *stack = (Stack *) malloc (sizeof (Stack));
-    stack->stack_values = malloc (sizeof (void *) * _INITIAL_STACK_SIZE);
-    //           size of pointer is 8 bytes ^
-    stack->stack_capacity = _INITIAL_STACK_SIZE;
-    stack->stack_size = 0;
+    if (stack == NULL) return NULL;
+    stack->values = malloc (sizeof (void *) * _INITIAL_STACK_SIZE);
+    if (stack->values == NULL)
+    {
+        free (stack);
+        return NULL;
+    }
+    stack->capacity = _INITIAL_STACK_SIZE;
+    stack->size = 0;
     return stack;
 }
 
-// seg. fault
+int deinit_stack (Stack **stack)
+{
+    if (stack == NULL || *stack == NULL)
+        return -1;
+    for (size_t i = 0; i < (*stack)->size; i++)
+        free ((*stack)->values[i]);
+    free ((*stack)->values);
+    free (*stack);
+    *stack = NULL;
+    return 0;
+}
+
 int push_stack (Stack *const stack, const void *const src, size_t src_size)
 {
+    if (stack == NULL || src == NULL) return -1;
     void *value = malloc (src_size);
-    // copy original source
     memcpy (value, src, src_size);
+    if (stack->size == stack->capacity - 1)
+    {
+        void *temp = realloc (stack->values,
+            sizeof (void *) * (stack->capacity * 2));
+        if (temp == NULL) return -1;
+        stack->values = temp;
+        stack->capacity *= 2;
+    }
 
-    // copy pointer to newly copied value
-    memcpy (stack->stack_values[stack->stack_size], value, sizeof (void *));
-    //                                    size of pointer is 8 bytes ^
-    stack->stack_size++;
+    // shift from index -> index+1
+    if (stack->size > 0)
+        for (size_t i = stack->size; i > 0; i--)
+            stack->values[i] = stack->values[i-1];
+    stack->values[0] = value;
+    stack->size++;
     return 0;
 }
 
 void* pop_stack (Stack *const stack)
 {
-    void *value = stack->stack_values[0];
-    // memmove from index+1 -> index;
+    if (stack == NULL || stack->size == 0)
+        return NULL;
+    void *value = stack->values[0];
+
+    // shift from index+1 -> index
+    for (size_t i = 0; i < stack->size; i++)
+        stack->values[i] = stack->values[i+1];
+    stack->size--;
+    if (stack->capacity > _INITIAL_STACK_SIZE &&
+        (stack->capacity / 2) > stack->size + 1)
+    {
+        void *temp = realloc (stack->values,
+            sizeof (void *) * (stack->capacity / 2));
+        if (temp == NULL) return NULL;
+        stack->values = temp;
+        stack->capacity /= 2;
+    }
     return value;
 }

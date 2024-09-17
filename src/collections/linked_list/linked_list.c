@@ -29,12 +29,13 @@ int _deinit_node_from_list (LinkedList *const list, Node *node)
     return 0;
 }
 
-int deinit_node (Node *node)
+int deinit_node (Node **node)
 {
     _CHECK_NULL (node);
-    if (node->value != NULL)
-        free (node->value);
-    free (node);
+    if ((*node)->value != NULL)
+        free ((*node)->value);
+    free (*node);
+    *node = NULL;
     return 0;
 }
 
@@ -107,6 +108,8 @@ Node* pop_linkedlist (LinkedList *const list)
     _CHECK_NULL_RETURN (list, NULL);
     _CHECK_NULL_RETURN (list->next, NULL);
     Node *node = (Node *) malloc (sizeof (Node));
+    if (node == NULL)
+        return NULL;
     node->next = NULL;
 
     node->value = list->next->value;
