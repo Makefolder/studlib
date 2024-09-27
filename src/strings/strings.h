@@ -9,11 +9,8 @@
 // from `#include <strings.h>`
 typedef char* string;
 
-// Unicode char
-typedef char* unicode;
-
-// string of unicode chars
-typedef unicode* unicode_str;
+// UTF-8 encoded char
+typedef char* utf8_char;
 
 // Let's say you've got some text with diacritics and emojis
 // and you wanna have each symbol
@@ -21,6 +18,6 @@ typedef unicode* unicode_str;
 // We have a program that takes a char and returns it into terminal
 // input: å
 // output: ?
-unicode_str str_into_unicode (string *string, size_t string_size);
+utf8_char* str_into_utf8_arr (const string string, size_t *const size);
 
 #endif

@@ -2,47 +2,54 @@
 
 #include <stdio.h>
 
-#define _CHECK_NULL(ptr) do { if ((ptr) == NULL) return -1; } while (0)
-#define _CHECK_NULL_RETURN(ptr, type) do { if ((ptr) == NULL) return type; } while (0)
+#define _CHECK_NULL(ptr) \
+    do { \
+        if (!(ptr)) return -1; \
+    } while (0)
 
-typedef struct Node
+#define _CHECK_NULL_RETURN(ptr, type) \
+    do { \
+        if (!(ptr)) return type; \
+    } while (0)
+
+typedef struct node_t
 {
     void *value;
-    struct Node *next;
-} Node;
+    struct node_t *next;
+} node_t;
 
 typedef struct
 {
     unsigned size;
     size_t value_size;
-    Node* next;
-} LinkedList;
+    node_t* next;
+} linkedlist_t;
 
 // Not for external usage (at least I didn't mean that)
-Node* _init_node (const LinkedList *list, const void *const value);
+node_t* _init_node (void *value);
 
 // Not for external usage (at least I didn't mean that)
-int _deinit_node_from_list (LinkedList *const list, Node *node);
+int _deinit_node (linkedlist_t *const list, node_t *node);
 
 // Deinit popped node
-int deinit_node (Node **node);
+int deinit_node (node_t **node);
 
 // Make linked list
-LinkedList* init_linkedlist (size_t value_size);
+linkedlist_t* init_linkedlist (size_t value_size);
 
-// Destroy linked list and its contents
-int deinit_linkedlist (LinkedList **const list);
+// Destroy list and its contents
+int deinit_linkedlist (linkedlist_t **const list);
 
-// Append node to the end (Content gets copied into linked list)
-int append_linkedlist (LinkedList *const list, const void *value);
+// Append value to the end
+int append_linkedlist (linkedlist_t *const list, void *value);
 
-// Insert node as first (Content gets copied into linked list)
-int push_linkedlist (LinkedList *const list, const void *value);
+// Insert value in the beginning
+int push_linkedlist (linkedlist_t *const list, void *value);
 
-// Get and remove first node
-Node* pop_linkedlist (LinkedList *const list);
+// Pop the first node from list 
+node_t* pop_linkedlist (linkedlist_t *const list);
 
-// Remove last node in linked list
-int remove_last_linkedlist (LinkedList *const list);
+// Remove last node in the list
+int remove_last_linkedlist (linkedlist_t *const list);
 
 #endif

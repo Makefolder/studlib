@@ -74,41 +74,100 @@ Header file for LinkedList:
 ```C
 #ifndef linked_list
 
-typedef struct Node
+#define _CHECK_NULL(ptr) \
+    do { \
+        if (!(ptr)) return -1; \
+    } while (0)
+
+#define _CHECK_NULL_RETURN(ptr, type) \
+    do { \
+        if (!(ptr)) return type; \
+    } while (0)
+
+typedef struct node_t
 {
     void *value;
-    struct Node *next;
-} Node;
+    struct node_t *next;
+} node_t;
 
 typedef struct
 {
     unsigned size;
     size_t value_size;
-    Node* next;
-} LinkedList;
-
-// Make linked list
-LinkedList* init_linkedlist (size_t value_size);
-
-// Destroy linked list and its contents
-int deinit_linkedlist (LinkedList **const list);
-
-// Append node to the end (Content gets copied into linked list)
-int append_linkedlist (LinkedList *const list, const void *value);
-
-// Insert node as first (Content gets copied into linked list)
-int push_linkedlist (LinkedList *const list, const void *value);
-
-// Remove last node in linked list
-int remove_last_linkedlist (LinkedList *const list);
-
-// Get and remove first node
-Node* pop_linkedlist (LinkedList *const list);
+    node_t* next;
+} linkedlist_t;
 
 // Deinit popped node
-int deinit_node (Node **node);
+int deinit_node (node_t **node);
+
+// Make linked list
+linkedlist_t* init_linkedlist (size_t value_size);
+
+// Destroy list and its contents
+int deinit_linkedlist (linkedlist_t **const list);
+
+// Append value to the end
+int append_linkedlist (linkedlist_t *const list, void *value);
+
+// Insert value in the beginning
+int push_linkedlist (linkedlist_t *const list, void *value);
+
+// Pop the first node from list 
+node_t* pop_linkedlist (linkedlist_t *const list);
+
+// Remove last node in the list
+int remove_last_linkedlist (linkedlist_t *const list);
 
 #endif
+```
+
+#### Example usage
+
+```C
+int main (void)
+{
+    linkedlist_t *list = init_linkedlist (sizeof (int));
+    if (!list)
+    {
+        puts ("Failed to initialize linked list.");
+        return -1;
+    }
+
+    int *n = (int *) malloc (sizeof (int));
+    *n = 24;
+
+    int *i = (int *) malloc (sizeof (int));
+    *i = 17;
+
+    if (push_linkedlist (list, n) != 0)
+    {
+        puts ("Failed to push into the list.");
+        return -1;
+    }
+    push_linkedlist (list, i);
+
+    /* first node */
+    node_t *node = pop_linkedlist (list);
+    if (!node)
+    {
+        puts ("Failed to pop.");
+        return -1;
+    }
+
+    printf ("%d\n", *(int *) node->value); // 17
+    deinit_node (&node);
+
+    node_t *node2 = pop_linkedlist (list);
+    deinit_node (&node2);
+
+    /* popping node that doesn't exist */
+    node_t *node3 = pop_linkedlist (list);
+    int result = deinit_node (&node3);
+    printf("%d\n", result); // -1
+
+    deinit_linkedlist (&list);
+    return 0;
+}
 ```
 
 ### Stacks
@@ -155,18 +214,20 @@ The blessed header file for strings:
 // from `#include <strings.h>`
 typedef char* string;
 
-// Unicode char
-typedef char* unicode;
+// UTF-8 encoded char
+typedef char* utf8_char;
 
-// string of unicode chars
-typedef unicode* unicode_str;
-
+// Let's say you've got some text with diacritics and emojis
+// and you wanna have each symbol
+//
 // We have a program that takes a char and returns it into terminal
 // input: å
 // output: ?
 //
-// in the standart C, `char` supports only ASCII.
-unicode_str str_into_unicode (string *string, size_t string_size);
+// -- this is utf8_char array.
+// |                  and this becomes the array's size -----.
+// v                                                         v
+utf8_char* str_into_utf8_arr (const string string, size_t *const size);
 
 #endif
 ```
