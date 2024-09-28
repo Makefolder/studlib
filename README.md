@@ -268,38 +268,59 @@ The blessed header file for strings:
 ```C
 #ifndef stud_strings
 
-#define prints(string) printf("%s\n", string);
+typedef struct {
+    uint32_t *codepoints; // Array of unicode code points
+    size_t length;        // length of array
+} utf8arr_t;
 
 // just regular ASCII string
 // to get its length use `strlen ()`
 // from `#include <strings.h>`
-typedef char* string;
+typedef char* string_t;
 
-// UTF-8 encoded char
-typedef char* utf8_char;
+// Function to count the number of bytes in a UTF-8 character
+int utf8_byte_count (char ch);
 
-// Let's say you've got some text with diacritics and emojis
-// and you wanna have each symbol
-//
-// We have a program that takes a char and returns it into terminal
-// input: å
-// output: ?
-//
-// -- this is utf8_char array.
-// |                  and this becomes the array's size -----.
-// v                                                         v
-utf8_char* str_into_utf8_arr (const string string, size_t *const size);
+// Function to extract a UTF-8 code point from the string
+uint32_t utf8_to_codepoint (const string_t str, int *char_len);
+
+// Function to parse UTF-8 string into an array of Unicode code points
+utf8arr_t parse_utf8_string (const string_t str);
+
+// Function to free the memory allocated for codepoints
+void free_utf8_arr (utf8arr_t *result);
 
 #endif
 ```
 
-### But how to use it?
+#### Example usage
 
-TODO EXAMPLES OF ITS USAGE
+```C
+int main (void) {
+    const string_t utf8_str = "Hello, 世界! 👋"; // Sample UTF-8 encoded string
+    puts (utf8_str);
+
+    // Parse UTF-8 string
+    utf8arr_t result = parse_utf8_string(utf8_str);
+    
+    // Iterate and print code points
+    printf("Parsed %lu UTF-8 characters:\n", result.length);
+    for (size_t i = 0; i < result.length; i++)
+        printf("Character %lu: U+%04X\n", i + 1, result.codepoints[i]);
+    free_utf8_arr (&result);
+
+    string_t string = "My string";
+    size_t str_len = strlen (string);
+
+    puts (string);
+    printf ("length of string is %lu\n", str_len);
+    return 0;
+}
+```
 
 ## PS
 
-If anyone uses this library, please report any bugs or memory leaks.
+If anyone uses this library, please report any bugs or memory leaks!
 
 <div align="center">
   <a href="https://choosealicense.com/licenses/mit/">
