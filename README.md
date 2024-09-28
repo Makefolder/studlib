@@ -320,7 +320,7 @@ int main (void) {
 If anyone uses this library, please report any bugs or memory leaks!
 
 <div align="center">
-  <a href="https://choosealicense.com/licenses/mit/">
-    <b>MIT</b>
+  <a href="https://github.com/Makefolder/studlib/issues/new">
+    <b>Report</b>
   <a/>
 <div/>
