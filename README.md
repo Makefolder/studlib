@@ -271,7 +271,6 @@ typedef struct {
     size_t length;        // length of array
 } utf8arr_t;
 
-// just regular ASCII string
 // to get its length use `strlen ()`
 // from `#include <strings.h>`
 typedef char* string_t;
