@@ -1,53 +1,7 @@
 #include <stdlib.h>
-#include <string.h>
 #include "linked_list.h"
 
-int main (void)
-{
-    linkedlist_t *list = init_linkedlist (sizeof (int));
-    if (!list)
-    {
-        puts ("Failed to initialize linked list.");
-        return -1;
-    }
-
-    int *n = (int *) malloc (sizeof (int));
-    *n = 24;
-
-    int *i = (int *) malloc (sizeof (int));
-    *i = 17;
-
-    if (push_linkedlist (list, n) != 0)
-    {
-        puts ("Failed to push into the list.");
-        return -1;
-    }
-    push_linkedlist (list, i);
-
-    /* first node */
-    node_t *node = pop_linkedlist (list);
-    if (!node)
-    {
-        puts ("Failed to pop.");
-        return -1;
-    }
-
-    printf ("%d\n", *(int *) node->value); // 17
-    deinit_node (&node);
-
-    node_t *node2 = pop_linkedlist (list);
-    deinit_node (&node2);
-
-    /* popping node that doesn't exist */
-    node_t *node3 = pop_linkedlist (list);
-    int result = deinit_node (&node3);
-    printf("%d\n", result); // -1
-
-    deinit_linkedlist (&list);
-    return 0;
-}
-
-node_t* _init_node (void *value)
+node_t* _init_node (void *const value)
 {
     node_t *node = (node_t *) malloc (sizeof (node_t));
     node->next = NULL;
@@ -110,7 +64,7 @@ int deinit_linkedlist (linkedlist_t **const list)
     return 0;
 }
 
-int append_linkedlist (linkedlist_t *const list, void *value)
+int append_linkedlist (linkedlist_t *const list, void *const value)
 {
     _CHECK_NULL (list);
     if (list->next == NULL)
@@ -133,7 +87,7 @@ int append_linkedlist (linkedlist_t *const list, void *value)
     return 0;
 }
 
-int push_linkedlist (linkedlist_t *const list, void *value)
+int push_linkedlist (linkedlist_t *const list, void *const value)
 {
     _CHECK_NULL (list);
     _CHECK_NULL (value);

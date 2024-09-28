@@ -1,11 +1,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "stack.h"
 
-Stack* init_stack (void)
+mstack_t* init_stack (void)
 {
-    Stack *stack = (Stack *) malloc (sizeof (Stack));
+    mstack_t *stack = (mstack_t *) malloc (sizeof (mstack_t));
     if (stack == NULL) return NULL;
     stack->values = malloc (sizeof (void *) * _INITIAL_STACK_SIZE);
     if (stack->values == NULL)
@@ -18,9 +19,9 @@ Stack* init_stack (void)
     return stack;
 }
 
-int deinit_stack (Stack **stack)
+int deinit_stack (mstack_t **stack)
 {
-    if (stack == NULL || *stack == NULL)
+    if (!stack || !*stack)
         return -1;
     for (size_t i = 0; i < (*stack)->size; i++)
         free ((*stack)->values[i]);
@@ -30,33 +31,29 @@ int deinit_stack (Stack **stack)
     return 0;
 }
 
-int push_stack (Stack *const stack, const void *const src, size_t src_size)
+int push_stack (mstack_t *const stack, void *const src)
 {
-    if (stack == NULL || src == NULL) return -1;
-    void *value = malloc (src_size);
-    memcpy (value, src, src_size);
+    if (!stack || !src) return -1;
     if (stack->size == stack->capacity - 1)
     {
-        void *temp = realloc (stack->values,
-            sizeof (void *) * (stack->capacity * 2));
-        if (temp == NULL) return -1;
-        stack->values = temp;
+        void *tmp = realloc (stack->values, sizeof (void *) * (stack->capacity * 2));
+        if (!tmp) return -1;
+        stack->values = tmp;
         stack->capacity *= 2;
     }
 
-    // shift from index -> index+1
     if (stack->size > 0)
         for (size_t i = stack->size; i > 0; i--)
             stack->values[i] = stack->values[i-1];
-    stack->values[0] = value;
+
+    stack->values[0] = src;
     stack->size++;
     return 0;
 }
 
-void* pop_stack (Stack *const stack)
+void* pop_stack (mstack_t *const stack)
 {
-    if (stack == NULL || stack->size == 0)
-        return NULL;
+    if (!stack || stack->size == 0) return NULL;
     void *value = stack->values[0];
 
     // shift from index+1 -> index

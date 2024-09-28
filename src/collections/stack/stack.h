@@ -2,24 +2,24 @@
 
 #include <stdio.h>
 
-#define _INITIAL_STACK_SIZE 4
+#define _INITIAL_STACK_SIZE 16
 
 typedef struct {
     size_t capacity;
     size_t size;
     // array of pointer to the values
     void **values;
-} Stack;
+} mstack_t;
 
-Stack* init_stack (void);
-int deinit_stack (Stack **stack);
+mstack_t* init_stack (void);
 
-// pushes an item in front of entire array (stack_values)
-// copies passed value
-int push_stack (Stack *const stack, const void *const src, size_t src_size);
+int deinit_stack (mstack_t **stack);
+
+// pushes an item in front of entire array (stack->values)
+int push_stack (mstack_t *const stack, void *const src);
 
 // get the first item in stack
-// DONT FORGET TO FREE RETURNED VALUE!
-void* pop_stack (Stack *const stack);
+// NOTE: don't forget to free the returned value!
+void* pop_stack (mstack_t *const stack);
 
 #endif

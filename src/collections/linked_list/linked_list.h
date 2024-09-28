@@ -26,7 +26,7 @@ typedef struct
 } linkedlist_t;
 
 // Not for external usage (at least I didn't mean that)
-node_t* _init_node (void *value);
+node_t* _init_node (void *const value);
 
 // Not for external usage (at least I didn't mean that)
 int _deinit_node (linkedlist_t *const list, node_t *node);
@@ -41,10 +41,10 @@ linkedlist_t* init_linkedlist (size_t value_size);
 int deinit_linkedlist (linkedlist_t **const list);
 
 // Append value to the end
-int append_linkedlist (linkedlist_t *const list, void *value);
+int append_linkedlist (linkedlist_t *const list, void *const value);
 
 // Insert value in the beginning
-int push_linkedlist (linkedlist_t *const list, void *value);
+int push_linkedlist (linkedlist_t *const list, void *const value);
 
 // Pop the first node from list 
 node_t* pop_linkedlist (linkedlist_t *const list);

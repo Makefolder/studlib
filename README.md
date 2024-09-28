@@ -107,10 +107,10 @@ linkedlist_t* init_linkedlist (size_t value_size);
 int deinit_linkedlist (linkedlist_t **const list);
 
 // Append value to the end
-int append_linkedlist (linkedlist_t *const list, void *value);
+int append_linkedlist (linkedlist_t *const list, void *const value);
 
 // Insert value in the beginning
-int push_linkedlist (linkedlist_t *const list, void *value);
+int push_linkedlist (linkedlist_t *const list, void *const value);
 
 // Pop the first node from list 
 node_t* pop_linkedlist (linkedlist_t *const list);
@@ -126,6 +126,12 @@ int remove_last_linkedlist (linkedlist_t *const list);
 ```C
 int main (void)
 {
+    int *n1 = (int *) malloc (sizeof (int));
+    *n1 = 24;
+
+    int *n2 = (int *) malloc (sizeof (int));
+    *n2 = 17;
+
     linkedlist_t *list = init_linkedlist (sizeof (int));
     if (!list)
     {
@@ -133,18 +139,12 @@ int main (void)
         return -1;
     }
 
-    int *n = (int *) malloc (sizeof (int));
-    *n = 24;
-
-    int *i = (int *) malloc (sizeof (int));
-    *i = 17;
-
-    if (push_linkedlist (list, n) != 0)
+    if (push_linkedlist (list, n1) != 0)
     {
         puts ("Failed to push into the list.");
         return -1;
     }
-    push_linkedlist (list, i);
+    push_linkedlist (list, n2);
 
     /* first node */
     node_t *node = pop_linkedlist (list);
@@ -172,28 +172,89 @@ int main (void)
 
 ### Stacks
 
-Initial stack capacity is `sizeof (void *)` * 32.
+Initial stack capacity is `sizeof (void *)` ×16. <br/>
+Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
 Header file for Stack:
 
 ```C
 #ifndef stack
 
+#define _INITIAL_STACK_SIZE 16
+
 typedef struct {
-    size_t stack_capacity;
-    size_t stack_size;
-    void **stack_values; // array of values
-} Stack;
+    size_t capacity;
+    size_t size;
+    // array of pointer to the values
+    void **values;
+} mstack_t;
 
-Stack* init_stack (void);
+mstack_t* init_stack (void);
 
-// pushes an item in front of entire array (stack_values)
-// copies passed value
-int push_stack (Stack *const stack, const void *const src, size_t src_size);
+int deinit_stack (mstack_t **stack);
+
+// pushes an item in front of entire array (stack->values)
+int push_stack (mstack_t *const stack, void *const src);
 
 // get the first item in stack
-void* pop_stack (Stack *const stack);
+// NOTE: don't forget to free the returned value!
+void* pop_stack (mstack_t *const stack);
 
 #endif
+```
+
+#### Example usage
+
+```C
+int main (void)
+{
+    int *n1 = (int *) malloc (sizeof (int));
+    *n1 = 24;
+
+    int *n2 = (int *) malloc (sizeof (int));
+    *n2 = 17;
+
+    mstack_t *stack = init_stack ();
+    if (!stack)
+    {
+        puts ("Failed to initialize stack.");
+        return -1;
+    }
+
+    int result = push_stack (stack, n1);
+    if (result != 0)
+    {
+        puts ("Failed to push into stack.");
+        deinit_stack (&stack);
+        return -1;
+    }
+
+    push_stack (stack, n2);
+
+    int *popped = (int *) pop_stack (stack);
+    if (!popped)
+    {
+        puts ("Failed to pop.");
+        deinit_stack (&stack);
+        return -1;
+    }
+    printf ("value: %d\n", *popped);
+    free (popped);
+
+    int *popped2 = (int *) pop_stack (stack);
+    printf ("value: %d\n", *popped);
+    free (popped2);
+
+    int *popped3 = (int *) pop_stack (stack);
+    if (!popped3)
+    {
+        puts ("nothing was to pop");
+        deinit_stack (&stack);
+        return -1;
+    }
+
+    deinit_stack (&stack);
+    return 0;
+}
 ```
 
 ## Strings
