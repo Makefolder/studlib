@@ -74,16 +74,6 @@ Header file for LinkedList:
 ```C
 #ifndef linked_list
 
-#define _CHECK_NULL(ptr) \
-    do { \
-        if (!(ptr)) return -1; \
-    } while (0)
-
-#define _CHECK_NULL_RETURN(ptr, type) \
-    do { \
-        if (!(ptr)) return type; \
-    } while (0)
-
 typedef struct node_t
 {
     void *value;
