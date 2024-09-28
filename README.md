@@ -259,9 +259,7 @@ int main (void)
 
 ## Strings
 
-### WORK IN PROCESS! THIS IS ONLY NOTED IDEA!
-
-### Supporting unicode
+### Supporting UTF-8 
 
 The blessed header file for strings:
 
