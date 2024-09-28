@@ -18,7 +18,7 @@ Basically all functions return -1 if fail and 0 if success.
 - [Collections](#collections)
   - [Linked Lists](#linked-lists)
   - [Stacks](#stacks)
-- [Strings (WIP)](#strings)
+- [Strings](#strings)
 
 ## Algorithms
 
