@@ -18,6 +18,7 @@ Basically all functions return -1 if fail and 0 if success.
 - [Collections](#collections)
   - [Linked Lists](#linked-lists)
   - [Stacks](#stacks)
+  - [Vectors](#vectors)
 - [Strings](#strings)
 
 ## Algorithms
@@ -116,10 +117,8 @@ int remove_last_linkedlist (linkedlist_t *const list);
 ```C
 int main (void)
 {
-    int *n1 = (int *) malloc (sizeof (int));
+    ...
     *n1 = 24;
-
-    int *n2 = (int *) malloc (sizeof (int));
     *n2 = 17;
 
     linkedlist_t *list = init_linkedlist (sizeof (int));
@@ -169,8 +168,6 @@ Header file for Stack:
 ```C
 #ifndef stack
 
-#define _INITIAL_STACK_SIZE 16
-
 typedef struct {
     size_t capacity;
     size_t size;
@@ -197,10 +194,8 @@ void* pop_stack (mstack_t *const stack);
 ```C
 int main (void)
 {
-    int *n1 = (int *) malloc (sizeof (int));
+    ...
     *n1 = 24;
-
-    int *n2 = (int *) malloc (sizeof (int));
     *n2 = 17;
 
     mstack_t *stack = init_stack ();
@@ -243,6 +238,98 @@ int main (void)
     }
 
     deinit_stack (&stack);
+    return 0;
+}
+```
+
+### Vectors
+
+Initial vector capacity is `sizeof (void *)` ×16. <br/>
+Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
+Vector header file:
+
+```C
+#ifndef vec
+
+typedef struct {
+    size_t size;
+    size_t capacity;
+    void **arr;
+} vec_t;
+
+vec_t *init_vec (void);
+
+int deinit_vec (vec_t **const vec);
+
+// push in the end of vec
+int push_vec (vec_t *vec, void *value);
+
+// removes last element and returns it
+void* pop_vec (vec_t *const vec);
+
+// removes element by index (shifts other elements BigO(n))
+void* remove_vec (vec_t *const vec, size_t index);
+
+// reverses the order of elements in vec
+int reverse_vec (const vec_t *const vec);
+
+#endif
+```
+
+#### Example usage
+
+```C
+int main (void)
+{
+    ...
+    *n0 = 1;
+    *n1 = 2;
+    *n2 = 4;
+    *n3 = 8;
+    *n4 = 16;
+    *n5 = 32;
+    *n6 = 64;
+
+    vec_t *vec = init_vec ();
+    if (!vec)
+    {
+        puts ("Failed to initialize vector.");
+        return -1;
+    }
+
+    int result = push_vec (vec, n0);
+    if (result != 0)
+    {
+        puts ("Failed to push into vec.");
+        return result;
+    }
+
+    push_vec (vec, n1);
+    push_vec (vec, n2);
+    push_vec (vec, n3);
+    push_vec (vec, n4);
+    push_vec (vec, n5);
+    push_vec (vec, n6);
+    int reverse_result = reverse_vec (vec);
+    if  (reverse_result != 0)
+    {
+        puts ("Failed to reverse vector.");
+        return reverse_result;
+    }
+
+    int *remove_n4 = (int *) remove_vec(vec, 4);
+    if (remove_n4)
+        free (remove_n4);
+
+    int *remove_n4_1 = (int *) remove_vec(vec, 4);
+    if (remove_n4_1)
+        free (remove_n4_1);
+
+    int *remove_n1 = (int *) remove_vec(vec, 1); 
+    if (remove_n1)
+        free (remove_n1);
+
+    deinit_vec (&vec);
     return 0;
 }
 ```
