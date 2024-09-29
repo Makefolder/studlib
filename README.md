@@ -17,8 +17,8 @@ Basically all functions return -1 if fail and 0 if success.
     - [Merge sorting](#merge-sorting)
 - [Collections](#collections)
   - [Linked Lists](#linked-lists)
-  - [Stacks](#stacks)
   - [Vectors](#vectors)
+  - [Stacks](#stacks)
 - [Strings](#strings)
 
 ## Algorithms
@@ -159,89 +159,6 @@ int main (void)
 }
 ```
 
-### Stacks
-
-Initial stack capacity is `sizeof (void *)` ×16. <br/>
-Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
-Header file for Stack:
-
-```C
-#ifndef stack
-
-typedef struct {
-    size_t capacity;
-    size_t size;
-    // array of pointer to the values
-    void **values;
-} mstack_t;
-
-mstack_t* init_stack (void);
-
-int deinit_stack (mstack_t **stack);
-
-// pushes an item in front of entire array (stack->values)
-int push_stack (mstack_t *const stack, void *const src);
-
-// get the first item in stack
-// NOTE: don't forget to free the returned value!
-void* pop_stack (mstack_t *const stack);
-
-#endif
-```
-
-#### Example usage
-
-```C
-int main (void)
-{
-    ...
-    *n1 = 24;
-    *n2 = 17;
-
-    mstack_t *stack = init_stack ();
-    if (!stack)
-    {
-        puts ("Failed to initialize stack.");
-        return -1;
-    }
-
-    int result = push_stack (stack, n1);
-    if (result != 0)
-    {
-        puts ("Failed to push into stack.");
-        deinit_stack (&stack);
-        return -1;
-    }
-
-    push_stack (stack, n2);
-
-    int *popped = (int *) pop_stack (stack);
-    if (!popped)
-    {
-        puts ("Failed to pop.");
-        deinit_stack (&stack);
-        return -1;
-    }
-    printf ("value: %d\n", *popped);
-    free (popped);
-
-    int *popped2 = (int *) pop_stack (stack);
-    printf ("value: %d\n", *popped);
-    free (popped2);
-
-    int *popped3 = (int *) pop_stack (stack);
-    if (!popped3)
-    {
-        puts ("nothing was to pop");
-        deinit_stack (&stack);
-        return -1;
-    }
-
-    deinit_stack (&stack);
-    return 0;
-}
-```
-
 ### Vectors
 
 Initial vector capacity is `sizeof (void *)` ×16. <br/>
@@ -330,6 +247,89 @@ int main (void)
         free (remove_n1);
 
     deinit_vec (&vec);
+    return 0;
+}
+```
+
+### Stacks
+
+Initial stack capacity is `sizeof (void *)` ×16. <br/>
+Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
+Header file for Stack:
+
+```C
+#ifndef stack
+
+typedef struct {
+    size_t capacity;
+    size_t size;
+    // array of pointer to the values
+    void **values;
+} mstack_t;
+
+mstack_t* init_stack (void);
+
+int deinit_stack (mstack_t **stack);
+
+// pushes an item in front of entire array (stack->values)
+int push_stack (mstack_t *const stack, void *const src);
+
+// get the first item in stack
+// NOTE: don't forget to free the returned value!
+void* pop_stack (mstack_t *const stack);
+
+#endif
+```
+
+#### Example usage
+
+```C
+int main (void)
+{
+    ...
+    *n1 = 24;
+    *n2 = 17;
+
+    mstack_t *stack = init_stack ();
+    if (!stack)
+    {
+        puts ("Failed to initialize stack.");
+        return -1;
+    }
+
+    int result = push_stack (stack, n1);
+    if (result != 0)
+    {
+        puts ("Failed to push into stack.");
+        deinit_stack (&stack);
+        return -1;
+    }
+
+    push_stack (stack, n2);
+
+    int *popped = (int *) pop_stack (stack);
+    if (!popped)
+    {
+        puts ("Failed to pop.");
+        deinit_stack (&stack);
+        return -1;
+    }
+    printf ("value: %d\n", *popped);
+    free (popped);
+
+    int *popped2 = (int *) pop_stack (stack);
+    printf ("value: %d\n", *popped);
+    free (popped2);
+
+    int *popped3 = (int *) pop_stack (stack);
+    if (!popped3)
+    {
+        puts ("nothing was to pop");
+        deinit_stack (&stack);
+        return -1;
+    }
+
+    deinit_stack (&stack);
     return 0;
 }
 ```
