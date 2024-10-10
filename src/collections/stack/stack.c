@@ -4,6 +4,8 @@
 
 #include "stack.h"
 
+#define _INITIAL_STACK_SIZE 16
+
 mstack_t *init_stack(void) {
   mstack_t *stack = (mstack_t *)malloc(sizeof(mstack_t));
   if (stack == NULL)

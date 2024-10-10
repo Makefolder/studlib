@@ -2,8 +2,6 @@
 
 #include <stdio.h>
 
-#define _INITIAL_CAPACITY 16
-
 typedef struct {
   size_t size;
   size_t capacity;
@@ -25,7 +23,5 @@ void *remove_vec(vec_t *const vec, size_t index);
 
 // reverses the order of elements in vec
 int reverse_vec(const vec_t *const vec);
-
-static void _realloc_vec(void *arr, size_t size, size_t *const capacity);
 
 #endif

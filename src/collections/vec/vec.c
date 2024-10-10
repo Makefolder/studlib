@@ -1,6 +1,18 @@
 #include "vec.h"
 #include <stdlib.h>
 
+#define _INITIAL_CAPACITY 16
+
+static void _realloc_vec(void *arr, size_t size, size_t *const capacity) {
+  if ((*capacity / 2) > size && (*capacity / 2) >= _INITIAL_CAPACITY) {
+    *capacity /= 2;
+    void *tmp = realloc(arr, sizeof(void *) * *capacity);
+    if (!tmp)
+      puts("STUDlib: Failed to shrink vector but the value returned anyway.");
+    arr = tmp;
+  }
+}
+
 vec_t *init_vec(void) {
   vec_t *vec = (vec_t *)malloc(sizeof(vec_t));
   vec->size = 0;
@@ -77,14 +89,4 @@ int reverse_vec(const vec_t *const vec) {
     vec->arr[len - 1 - i] = tmp;
   }
   return 0;
-}
-
-static void _realloc_vec(void *arr, size_t size, size_t *const capacity) {
-  if ((*capacity / 2) > size && (*capacity / 2) >= _INITIAL_CAPACITY) {
-    *capacity /= 2;
-    void *tmp = realloc(arr, sizeof(void *) * *capacity);
-    if (!tmp)
-      puts("STUDlib: Failed to shrink vector but the value returned anyway.");
-    arr = tmp;
-  }
 }
