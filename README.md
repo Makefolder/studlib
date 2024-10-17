@@ -20,6 +20,7 @@ Basically all functions return -1 if fail and 0 if success.
   - [Vectors](#vectors)
   - [Stacks](#stacks)
 - [Strings](#strings)
+- [Todo](#todo)
 
 ## Algorithms
 
@@ -392,6 +393,13 @@ int main (void) {
 }
 ```
 
+## Todo
+
+- Hashmaps `src/collections/hashmap`
+- Heap `src/collections/heap`
+- Queue `src/collections/queue`
+- Tree `src/collections/tree`
+
 ## PS
 
 If anyone uses this library, please report any bugs or memory leaks!
@@ -401,3 +409,4 @@ If anyone uses this library, please report any bugs or memory leaks!
     <b>Report</b>
   <a/>
 <div/>
+
