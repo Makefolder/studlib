@@ -410,7 +410,7 @@ int main (void) {
   - ...
 - Tree `src/collections/tree`
   - `init_tree(void)`
-  - `deinit_tree(tree_q **tree)`
+  - `deinit_tree(tree_t **tree)`
   - ...
 
 ## PS
