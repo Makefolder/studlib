@@ -395,7 +395,7 @@ int main (void) {
 
 ## Todo
 
-- Hashmaps `src/collections/hashmap`
+- Hashmap `src/collections/hashmap`
 - Heap `src/collections/heap`
 - Queue `src/collections/queue`
 - Tree `src/collections/tree`
