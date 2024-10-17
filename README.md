@@ -396,9 +396,22 @@ int main (void) {
 ## Todo
 
 - Hashmap `src/collections/hashmap`
+  - `init_hashmap(void)`
+  - `deinit_hashmap(hashmap_t **hashmap)`
+  - `push_hashmap(hashmap_t **hashmap)`
+  - ...
 - Heap `src/collections/heap`
+  - `init_heap(void)`
+  - `deinit_heap(heap_t **heap)`
+  - ...
 - Queue `src/collections/queue`
+  - `init_queue(void)`
+  - `deinit_queue(queue_t **queue)`
+  - ...
 - Tree `src/collections/tree`
+  - `init_tree(void)`
+  - `deinit_tree(tree_q **tree)`
+  - ...
 
 ## PS
 
