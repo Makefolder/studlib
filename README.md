@@ -396,21 +396,21 @@ int main (void) {
 ## Todo
 
 - Hashmap `src/collections/hashmap`
-  - `init_hashmap(void)`
-  - `deinit_hashmap(hashmap_t **hashmap)`
-  - `push_hashmap(hashmap_t **hashmap)`
+  - `hashmap_t *init_hashmap(void)`
+  - `int deinit_hashmap(hashmap_t **hashmap)`
+  - `int push_hashmap(hashmap_t **hashmap)`
   - ...
 - Heap `src/collections/heap`
-  - `init_heap(void)`
-  - `deinit_heap(heap_t **heap)`
+  - `heap_t *init_heap(void)`
+  - `int deinit_heap(heap_t **heap)`
   - ...
 - Queue `src/collections/queue`
-  - `init_queue(void)`
-  - `deinit_queue(queue_t **queue)`
+  - `queue_t *init_queue(void)`
+  - `int deinit_queue(queue_t **queue)`
   - ...
 - Tree `src/collections/tree`
-  - `init_tree(void)`
-  - `deinit_tree(tree_t **tree)`
+  - `tree_t *init_tree(void)`
+  - `int deinit_tree(tree_t **tree)`
   - ...
 
 ## PS
