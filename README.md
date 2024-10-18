@@ -389,7 +389,7 @@ int main(void) {
 
 ## Todo
 
-- Natural type vec
+- Natural type vector
   - The idea behind this one is that `vec_t` stores pointers to allocated values
     but if you don't want to store something in vec from the heap (that is not allocated manually)
     you could use something like `nvec_t` where `n` stands for `natural type`.
