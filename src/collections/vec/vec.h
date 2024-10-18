@@ -8,6 +8,8 @@ typedef struct {
   void **arr;
 } vec_t;
 
+/*todo*/
+/*vec_t *init_vec(void *init_arr[]);*/
 vec_t *init_vec(void);
 
 int deinit_vec(vec_t **const vec);
