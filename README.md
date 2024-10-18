@@ -12,6 +12,7 @@ Basically all functions return -1 if fail and 0 if success.
 - [Algorithms](#algorithms)
   - [Search](#searching)
     - [Linear search](#linear-search)
+    - [Binary search](#binary-search)
   - [Sorting](#sorting)
     - [Bubble sorting](#bubble-sorting)
     - [Merge sorting](#merge-sorting)
@@ -26,7 +27,9 @@ Basically all functions return -1 if fail and 0 if success.
 
 ## Searching
 
-### Linear sorting
+### Linear search
+
+These algorithms return `index` of the target in arr. If fails to find, these return `-1`. <br />
 
 Header file:
 
@@ -35,11 +38,17 @@ Header file:
 int linear_search (const int arr[], size_t len, int target);
 ```
 
+### Binary search
+
+```C
+int binary_search(const int arr[], int low, int high, int target);
+```
+
 ## Sorting
 
 ### Bubble sorting
 
-Note: mutates the passed array.
+Note: changes the passed array.
 
 ```C
 int bubble_sort(int *const arr, size_t size);
@@ -90,25 +99,25 @@ typedef struct
 } linkedlist_t;
 
 // Deinit popped node
-int deinit_node (node_t **node);
+int deinit_node(node_t **node);
 
 // Make linked list
-linkedlist_t* init_linkedlist (size_t value_size);
+linkedlist_t *init_linkedlist(size_t value_size);
 
 // Destroy list and its contents
-int deinit_linkedlist (linkedlist_t **const list);
+int deinit_linkedlist(linkedlist_t **const list);
 
 // Append value to the end
-int append_linkedlist (linkedlist_t *const list, void *const value);
+int append_linkedlist(linkedlist_t *const list, void *const value);
 
 // Insert value in the beginning
-int push_linkedlist (linkedlist_t *const list, void *const value);
+int push_linkedlist(linkedlist_t *const list, void *const value);
 
 // Pop the first node from list 
-node_t* pop_linkedlist (linkedlist_t *const list);
+node_t *pop_linkedlist(linkedlist_t *const list);
 
 // Remove last node in the list
-int remove_last_linkedlist (linkedlist_t *const list);
+int remove_last_linkedlist(linkedlist_t *const list);
 
 #endif
 ```
