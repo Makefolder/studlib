@@ -1,21 +1,19 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "stack.h"
 
-#define _INITIAL_STACK_SIZE 16
+#define INITIAL_STACK_SIZE 16
 
 mstack_t *init_stack(void) {
   mstack_t *stack = (mstack_t *)malloc(sizeof(mstack_t));
   if (stack == NULL)
     return NULL;
-  stack->values = malloc(sizeof(void *) * _INITIAL_STACK_SIZE);
+  stack->values = malloc(sizeof(void *) * INITIAL_STACK_SIZE);
   if (stack->values == NULL) {
     free(stack);
     return NULL;
   }
-  stack->capacity = _INITIAL_STACK_SIZE;
+  stack->capacity = INITIAL_STACK_SIZE;
   stack->size = 0;
   return stack;
 }
@@ -60,7 +58,7 @@ void *pop_stack(mstack_t *const stack) {
   for (size_t i = 0; i < stack->size; i++)
     stack->values[i] = stack->values[i + 1];
   stack->size--;
-  if (stack->capacity > _INITIAL_STACK_SIZE &&
+  if (stack->capacity > INITIAL_STACK_SIZE &&
       (stack->capacity / 2) > stack->size + 1) {
     void *temp = realloc(stack->values, sizeof(void *) * (stack->capacity / 2));
     if (temp == NULL)

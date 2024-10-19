@@ -1,6 +1,6 @@
 #ifndef vec
 
-#include <stdio.h>
+#include <stddef.h>
 
 typedef struct {
   size_t size;

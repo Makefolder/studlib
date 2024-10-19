@@ -1,6 +1,6 @@
 #ifndef linked_list
 
-#include <stdio.h>
+#include <stddef.h>
 
 typedef struct node_t {
   void *value;

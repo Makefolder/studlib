@@ -1,10 +1,11 @@
 #include "vec.h"
+#include <stdio.h>
 #include <stdlib.h>
 
-#define _INITIAL_CAPACITY 16
+#define INITIAL_CAPACITY 16
 
 static void _realloc_vec(void *arr, size_t size, size_t *const capacity) {
-  if ((*capacity / 2) > size && (*capacity / 2) >= _INITIAL_CAPACITY) {
+  if ((*capacity / 2) > size && (*capacity / 2) >= INITIAL_CAPACITY) {
     *capacity /= 2;
     void *tmp = realloc(arr, sizeof(void *) * *capacity);
     if (!tmp)
@@ -16,7 +17,7 @@ static void _realloc_vec(void *arr, size_t size, size_t *const capacity) {
 vec_t *init_vec(void) {
   vec_t *vec = (vec_t *)malloc(sizeof(vec_t));
   vec->size = 0;
-  vec->capacity = _INITIAL_CAPACITY;
+  vec->capacity = INITIAL_CAPACITY;
   vec->arr = malloc(sizeof(void *) * vec->capacity);
   return vec;
 }
