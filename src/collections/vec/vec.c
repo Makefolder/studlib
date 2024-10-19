@@ -4,18 +4,21 @@
 
 #define INITIAL_CAPACITY 16
 
-static void _realloc_vec(void *arr, size_t size, size_t *const capacity) {
+static void realloc_vec(void *arr, size_t size, size_t *const capacity) {
   if ((*capacity / 2) > size && (*capacity / 2) >= INITIAL_CAPACITY) {
     *capacity /= 2;
     void *tmp = realloc(arr, sizeof(void *) * *capacity);
     if (!tmp)
       puts("STUDlib: Failed to shrink vector but the value returned anyway.");
-    arr = tmp;
+    else
+      arr = tmp;
   }
 }
 
 vec_t *init_vec(void) {
   vec_t *vec = (vec_t *)malloc(sizeof(vec_t));
+  if (!vec)
+    return NULL;
   vec->size = 0;
   vec->capacity = INITIAL_CAPACITY;
   vec->arr = malloc(sizeof(void *) * vec->capacity);
@@ -58,7 +61,7 @@ void *pop_vec(vec_t *const vec) {
   vec->arr[vec->size - 1] = NULL;
   vec->size--;
 
-  _realloc_vec(vec->arr, vec->size, &vec->capacity);
+  realloc_vec(vec->arr, vec->size, &vec->capacity);
   return value;
 }
 
@@ -76,7 +79,7 @@ void *remove_vec(vec_t *const vec, size_t index) {
       vec->arr[i] = NULL;
   }
   vec->size--;
-  _realloc_vec(vec->arr, vec->size, &vec->capacity);
+  realloc_vec(vec->arr, vec->size, &vec->capacity);
   return value;
 }
 
