@@ -1,4 +1,6 @@
-#ifndef nvec
+#ifndef NVEC_H
+
+#define NVEC_H
 
 #include <stddef.h>
 

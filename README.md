@@ -82,7 +82,9 @@ void merge_sort(int arr[], int l, int r);
 Header file for LinkedList:
 
 ```C
-#ifndef linked_list
+#ifndef LINKEDLIST_H
+
+#define LINKEDLIST_H
 
 typedef struct node_t {
   void *value;
@@ -169,7 +171,9 @@ Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
 Vector header file:
 
 ```C
-#ifndef vec
+#ifndef VEC_H
+
+#define VEC_H
 
 typedef struct {
   size_t size;
@@ -257,7 +261,9 @@ Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
 Header file for Stack:
 
 ```C
-#ifndef stack
+#ifndef STACK_H
+
+#define STACK_H
 
 typedef struct {
   size_t capacity;
@@ -335,7 +341,9 @@ int main(void) {
 The blessed header file for strings:
 
 ```C
-#ifndef stud_strings
+#ifndef STUD_STRINGS_H
+
+#define STUD_STRINGS_H
 
 typedef struct {
   uint32_t *codepoints; // Array of unicode code points
