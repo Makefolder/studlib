@@ -2,25 +2,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define INITIAL_CAPACITY 16
+#define INITIAL_VEC_CAPACITY 16
 
 static void realloc_vec(void *arr, size_t size, size_t *const capacity) {
-  if ((*capacity / 2) > size && (*capacity / 2) >= INITIAL_CAPACITY) {
+  if ((*capacity / 2) > size && (*capacity / 2) >= INITIAL_VEC_CAPACITY) {
     *capacity /= 2;
     void *tmp = realloc(arr, sizeof(void *) * *capacity);
     if (!tmp)
-      puts("STUDlib: Failed to shrink vector but the value returned anyway.");
+      puts("STUDlib: Failed to shrink vector.");
     else
       arr = tmp;
   }
 }
 
 vec_t *init_vec(void) {
-  vec_t *vec = (vec_t *)malloc(sizeof(vec_t));
+  vec_t *vec = malloc(sizeof(vec_t));
   if (!vec)
     return NULL;
   vec->size = 0;
-  vec->capacity = INITIAL_CAPACITY;
+  vec->capacity = INITIAL_VEC_CAPACITY;
   vec->arr = malloc(sizeof(void *) * vec->capacity);
   return vec;
 }

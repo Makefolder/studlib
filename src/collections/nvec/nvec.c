@@ -1,21 +1,21 @@
 #include "nvec.h"
 #include <stdlib.h>
 
-#define INITIAL_CAPACITY 16
+#define INITIAL_NVEC_CAPACITY 16
 
-int main(void) {
-  enum type_e type = INT;
-  nvec_t *nvec = init_nvec(type);
-  deinit_nvec(&nvec);
-  return 0;
-}
+/*int main(void) {*/
+/*  enum type_e type = INT;*/
+/*  nvec_t *nvec = init_nvec(type);*/
+/*  deinit_nvec(&nvec);*/
+/*  return 0;*/
+/*}*/
 
 nvec_t *init_nvec(enum type_e type) {
-  nvec_t *nvec = (nvec_t *)malloc(sizeof(nvec_t));
+  nvec_t *nvec = malloc(sizeof(nvec_t));
   if (!nvec)
     return NULL;
   nvec->size = 0;
-  nvec->capacity = INITIAL_CAPACITY;
+  nvec->capacity = INITIAL_NVEC_CAPACITY;
 
   // alloc initial array for `nvec`
   switch (type) {

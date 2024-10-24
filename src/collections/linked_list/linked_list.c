@@ -1,20 +1,8 @@
 #include "linked_list.h"
 #include <stdlib.h>
 
-#define _CHECK_NULL(ptr)                                                       \
-  do {                                                                         \
-    if (!(ptr))                                                                \
-      return -1;                                                               \
-  } while (0)
-
-#define _CHECK_NULL_RETURN(ptr, type)                                          \
-  do {                                                                         \
-    if (!(ptr))                                                                \
-      return type;                                                             \
-  } while (0)
-
 static node_t *_init_node(void *const value) {
-  node_t *node = (node_t *)malloc(sizeof(node_t));
+  node_t *node = malloc(sizeof(node_t));
   node->next = NULL;
   if (value)
     node->value = value;
@@ -26,23 +14,30 @@ static node_t *_init_node(void *const value) {
 }
 
 static int _deinit_node(linkedlist_t *const list, node_t *node) {
-  _CHECK_NULL(list);
-  _CHECK_NULL(node);
-  if (node->value != NULL)
+  if (!list)
+    return -1;
+  if (!node)
+    return -1;
+
+  if (node->value)
     free(node->value);
+
   node->value = NULL;
   if (list->next == node)
     list->next = NULL;
   free(node);
+
   if (list->size > 0)
     list->size -= 1;
   return 0;
 }
 
 int deinit_node(node_t **node) {
-  _CHECK_NULL(node);
-  _CHECK_NULL(*node);
-  if ((*node)->value != NULL)
+  if (!node)
+    return -1;
+  if (!*node)
+    return -1;
+  if ((*node)->value)
     free((*node)->value);
   free(*node);
   *node = NULL;
@@ -50,7 +45,7 @@ int deinit_node(node_t **node) {
 }
 
 linkedlist_t *init_linkedlist(size_t value_size) {
-  linkedlist_t *list = (linkedlist_t *)malloc(sizeof(linkedlist_t));
+  linkedlist_t *list = malloc(sizeof(linkedlist_t));
   list->value_size = value_size;
   list->size = 0;
   list->next = NULL;
@@ -58,10 +53,12 @@ linkedlist_t *init_linkedlist(size_t value_size) {
 }
 
 int deinit_linkedlist(linkedlist_t **const list) {
-  _CHECK_NULL(list);
-  _CHECK_NULL(*list);
+  if (!list)
+    return -1;
+  if (!*list)
+    return -1;
   node_t *ptr = (*list)->next;
-  while (ptr != NULL) {
+  while (ptr) {
     node_t *next = ptr->next;
     _deinit_node(*list, ptr);
     ptr = next;
@@ -72,8 +69,9 @@ int deinit_linkedlist(linkedlist_t **const list) {
 }
 
 int append_linkedlist(linkedlist_t *const list, void *const value) {
-  _CHECK_NULL(list);
-  if (list->next == NULL) {
+  if (!list)
+    return -1;
+  if (!list->next) {
     node_t *node = _init_node(value);
     if (!node)
       return -1;
@@ -82,7 +80,7 @@ int append_linkedlist(linkedlist_t *const list, void *const value) {
     return 0;
   }
   node_t *next = list->next;
-  while (next->next != NULL)
+  while (next->next)
     next = next->next;
   node_t *node = _init_node(value);
   if (!node)
@@ -93,18 +91,18 @@ int append_linkedlist(linkedlist_t *const list, void *const value) {
 }
 
 int push_linkedlist(linkedlist_t *const list, void *const value) {
-  _CHECK_NULL(list);
-  _CHECK_NULL(value);
-  if (list->next == NULL) {
+  if (!list)
+    return -1;
+  if (!value)
+    return -1;
+  if (!list->next) {
     int result = append_linkedlist(list, value);
     if (result != 0)
       return result;
   } else {
-    // leak leak leak
     node_t *node = _init_node(value);
     if (!node)
       return -1;
-    _CHECK_NULL(node);
     node_t *temp = list->next;
     node->next = temp;
     list->next = node;
@@ -114,11 +112,13 @@ int push_linkedlist(linkedlist_t *const list, void *const value) {
 }
 
 node_t *pop_linkedlist(linkedlist_t *const list) {
-  _CHECK_NULL_RETURN(list, NULL);
-  _CHECK_NULL_RETURN(list->next, NULL);
+  if (!list)
+    return NULL;
+  if (!list->next)
+    return NULL;
 
   node_t *node = list->next;
-  if (node->next != NULL)
+  if (node->next)
     list->next = node->next;
   else
     list->next = NULL;
@@ -131,22 +131,27 @@ node_t *pop_linkedlist(linkedlist_t *const list) {
 }
 
 int remove_last_linkedlist(linkedlist_t *const list) {
-  _CHECK_NULL(list);
+  if (!list)
+    return -1;
   if (list->size == 0)
     return -1;
   if (list->size == 1) {
     free(list->next->value);
     free(list->next);
+
     list->next = NULL;
     list->size -= 1;
     return 0;
   }
+
   node_t *previous = list->next;
   node_t *current = list->next;
-  while (current->next != NULL) {
+
+  while (current->next) {
     previous = current;
     current = current->next;
   }
+
   free(current->value);
   free(current);
   previous->next = NULL;

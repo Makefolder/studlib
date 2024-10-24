@@ -5,11 +5,11 @@
 #define INITIAL_STACK_SIZE 16
 
 mstack_t *init_stack(void) {
-  mstack_t *stack = (mstack_t *)malloc(sizeof(mstack_t));
-  if (stack == NULL)
+  mstack_t *stack = malloc(sizeof(mstack_t));
+  if (!stack)
     return NULL;
   stack->values = malloc(sizeof(void *) * INITIAL_STACK_SIZE);
-  if (stack->values == NULL) {
+  if (!stack->values) {
     free(stack);
     return NULL;
   }
@@ -61,7 +61,7 @@ void *pop_stack(mstack_t *const stack) {
   if (stack->capacity > INITIAL_STACK_SIZE &&
       (stack->capacity / 2) > stack->size + 1) {
     void *temp = realloc(stack->values, sizeof(void *) * (stack->capacity / 2));
-    if (temp == NULL)
+    if (!temp)
       return NULL;
     stack->values = temp;
     stack->capacity /= 2;
