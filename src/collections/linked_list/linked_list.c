@@ -1,4 +1,5 @@
 #include "linked_list.h"
+#include "../../errors/studerror.h"
 #include <stdlib.h>
 
 static node_t *_init_node(void *const value) {
@@ -8,16 +9,23 @@ static node_t *_init_node(void *const value) {
     node->value = value;
   else
     node->value = NULL;
-  if (!node)
+  if (!node) {
+    print_error("Failed to allocate node for linked list.");
     return NULL;
+  }
   return node;
 }
 
+// For internal deallocation (only internal logic of this library)
 static int _deinit_node(linkedlist_t *const list, node_t *node) {
-  if (!list)
+  if (!list) {
+    print_error("Failed to deallocate node for linked list.");
     return -1;
-  if (!node)
+  }
+  if (!node) {
+    print_error("Failed to deallocate node for linked list.");
     return -1;
+  }
 
   if (node->value)
     free(node->value);
@@ -32,11 +40,16 @@ static int _deinit_node(linkedlist_t *const list, node_t *node) {
   return 0;
 }
 
+// For external deallocation (only for users of this library)
 int deinit_node(node_t **node) {
-  if (!node)
+  if (!node) {
+    print_error("Failed to deinitialize node of linked list.");
     return -1;
-  if (!*node)
+  }
+  if (!*node) {
+    print_error("Failed to deinitialize node of linked list.");
     return -1;
+  }
   if ((*node)->value)
     free((*node)->value);
   free(*node);
@@ -46,6 +59,10 @@ int deinit_node(node_t **node) {
 
 linkedlist_t *init_linkedlist(size_t value_size) {
   linkedlist_t *list = malloc(sizeof(linkedlist_t));
+  if (!list) {
+    print_error("Failed to initialize linked list.");
+    return NULL;
+  }
   list->value_size = value_size;
   list->size = 0;
   list->next = NULL;
@@ -53,10 +70,14 @@ linkedlist_t *init_linkedlist(size_t value_size) {
 }
 
 int deinit_linkedlist(linkedlist_t **const list) {
-  if (!list)
+  if (!list) {
+    print_error("Failed to deinitialize linked list.");
     return -1;
-  if (!*list)
+  }
+  if (!*list) {
+    print_error("Failed to deinitialize linked list.");
     return -1;
+  }
   node_t *ptr = (*list)->next;
   while (ptr) {
     node_t *next = ptr->next;
@@ -68,9 +89,12 @@ int deinit_linkedlist(linkedlist_t **const list) {
   return 0;
 }
 
+// Finds and appends to the last node in linked list
 int append_linkedlist(linkedlist_t *const list, void *const value) {
-  if (!list)
+  if (!list) {
+    print_error("Failed to append to linked list.");
     return -1;
+  }
   if (!list->next) {
     node_t *node = _init_node(value);
     if (!node)
@@ -83,26 +107,37 @@ int append_linkedlist(linkedlist_t *const list, void *const value) {
   while (next->next)
     next = next->next;
   node_t *node = _init_node(value);
-  if (!node)
+  if (!node) {
+    print_error("Failed to initialize new node for linked list.");
     return -1;
+  }
   next->next = node;
   list->size++;
   return 0;
 }
 
+// Sets head's next to newly allocated node
 int push_linkedlist(linkedlist_t *const list, void *const value) {
-  if (!list)
+  if (!list) {
+    print_error("Failed to push into linked list.");
     return -1;
-  if (!value)
+  }
+  if (!value) {
+    print_error("Failed to push into linked list.");
     return -1;
+  }
   if (!list->next) {
     int result = append_linkedlist(list, value);
-    if (result != 0)
-      return result;
+    if (result != 0) {
+      print_error("Failed to push into linked list.");
+      return -1;
+    }
   } else {
     node_t *node = _init_node(value);
-    if (!node)
+    if (!node) {
+      print_error("Failed to initialize new node for linked list.");
       return -1;
+    }
     node_t *temp = list->next;
     node->next = temp;
     list->next = node;
@@ -111,11 +146,16 @@ int push_linkedlist(linkedlist_t *const list, void *const value) {
   return 0;
 }
 
+// Pops the first node of linked list
 node_t *pop_linkedlist(linkedlist_t *const list) {
-  if (!list)
+  if (!list) {
+    print_error("Failed to pop from linked list.");
     return NULL;
-  if (!list->next)
+  }
+  if (!list->next) {
+    print_error("Failed to pop from linked list.");
     return NULL;
+  }
 
   node_t *node = list->next;
   if (node->next)
@@ -124,24 +164,24 @@ node_t *pop_linkedlist(linkedlist_t *const list) {
     list->next = NULL;
 
   node->next = NULL;
-  if (list->size <= 0)
-    return NULL;
   list->size--;
   return node;
 }
 
-int remove_last_linkedlist(linkedlist_t *const list) {
-  if (!list)
-    return -1;
-  if (list->size == 0)
-    return -1;
+node_t *pop_end_linkedlist(linkedlist_t *const list) {
+  if (!list) {
+    print_error("Failed to pop last node from linked list.");
+    return NULL;
+  }
+  if (list->size == 0) {
+    print_error("Failed to pop last node from linked list.");
+    return NULL;
+  }
   if (list->size == 1) {
-    free(list->next->value);
-    free(list->next);
-
+    node_t *node = list->next;
     list->next = NULL;
-    list->size -= 1;
-    return 0;
+    list->size--;
+    return node;
   }
 
   node_t *previous = list->next;
@@ -151,10 +191,7 @@ int remove_last_linkedlist(linkedlist_t *const list) {
     previous = current;
     current = current->next;
   }
-
-  free(current->value);
-  free(current);
   previous->next = NULL;
   list->size--;
-  return 0;
+  return current;
 }

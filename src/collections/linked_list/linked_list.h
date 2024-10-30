@@ -33,7 +33,7 @@ int push_linkedlist(linkedlist_t *const list, void *const value);
 // Pop the first node from list
 node_t *pop_linkedlist(linkedlist_t *const list);
 
-// Remove last node in the list
-int remove_last_linkedlist(linkedlist_t *const list);
+// Pop the last node in the list
+node_t *pop_end_linkedlist(linkedlist_t *const list);
 
 #endif
