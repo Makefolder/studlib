@@ -14,6 +14,6 @@
 #endif
 
 // just an idea
-/*typedef enum { SUCCESS, FAILURE } errcode_t;*/
+/*typedef enum { SUCCESS, FAILURE } statuscode_t;*/
 
 #endif

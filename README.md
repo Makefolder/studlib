@@ -20,7 +20,7 @@ Basically all functions return -1 if fail and 0 if success.
   - [Linked Lists](#linked-lists)
   - [Vectors](#vectors)
   - [Stacks](#stacks)
-- [Strings](#strings)
+<!--- [Strings](#strings)-->
 - [Todo](#todo)
 
 ## Algorithms
@@ -188,6 +188,9 @@ int deinit_vec(vec_t **const vec);
 // push in the end of vec
 int push_vec(vec_t *vec, void *value);
 
+// macro that allocates value on heap, stores ptr in the vector
+#define push_nvec(vec_ptr, result_ptr, value, type)
+
 // removes last element and returns it
 void* pop_vec(vec_t *const vec);
 
@@ -205,13 +208,8 @@ int reverse_vec(const vec_t *const vec);
 ```C
 int main(void) {
     ...
-    *n0 = 1;
-    *n1 = 2;
-    *n2 = 4;
-    *n3 = 8;
-    *n4 = 16;
-    *n5 = 32;
-    *n6 = 64;
+    yourtype_t *ur_type = malloc(sizeof(yourtype_t));
+    *ur_type = ...;
 
     vec_t *vec = init_vec();
     if (!vec) {
@@ -225,29 +223,24 @@ int main(void) {
     return result;
   }
 
-  push_vec(vec, n1);
-  push_vec(vec, n2);
-  push_vec(vec, n3);
-  push_vec(vec, n4);
-  push_vec(vec, n5);
-  push_vec(vec, n6);
+  int res = 0;
+  push_nvec(vec, &res, 1, int);
+  push_nvec(vec, NULL, 2, int);
+  push_nvec(vec, NULL, 'g', char);
+
+  int res2 = push_vec(vec, ur_type);
+
   int reverse_result = reverse_vec(vec);
   if  (reverse_result != 0) {
     puts("Failed to reverse vector.");
     return reverse_result;
   }
 
-  int *remove_n4 = (int *)remove_vec(vec, 4);
-  if (remove_n4)
-    free(remove_n4);
-
-  int *remove_n4_1 = (int *)remove_vec(vec, 4);
-  if (remove_n4_1)
-    free(remove_n4_1);
-
-  int *remove_n1 = (int *)remove_vec(vec, 1); 
-  if (remove_n1)
-    free(remove_n1);
+  char *my_char = (char *)remove_vec(vec, 2);
+  if (my_char) {
+    /* ... */
+    free(my_char);
+  }
 
   deinit_vec(&vec);
   return 0;
@@ -257,7 +250,7 @@ int main(void) {
 ### Stacks
 
 Initial stack capacity is `sizeof(void *)` ×16. <br/>
-Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
+Capacity grows exponentially <br/>
 Header file for Stack:
 
 ```C
@@ -334,73 +327,69 @@ int main(void) {
 }
 ```
 
-## Strings
+<!--## Strings-->
+<!---->
+<!--### Supporting UTF-8 -->
+<!---->
+<!--The blessed header file for strings:-->
+<!---->
+<!--```C-->
+<!--#ifndef STUD_STRINGS_H-->
+<!---->
+<!--#define STUD_STRINGS_H-->
+<!---->
+<!--typedef struct {-->
+<!--  uint32_t *codepoints; // Array of unicode code points-->
+<!--  size_t length;        // length of array-->
+<!--} utf8arr_t;-->
+<!---->
+<!--// to get its length use `strlen ()`-->
+<!--// from `#include <strings.h>`-->
+<!--typedef char* string_t;-->
+<!---->
+<!--// Function to count the number of bytes in a UTF-8 character-->
+<!--int utf8_byte_count(char ch);-->
+<!---->
+<!--// Function to extract a UTF-8 code point from the string-->
+<!--uint32_t utf8_to_codepoint(const string_t str, int *char_len);-->
+<!---->
+<!--// Function to parse UTF-8 string into an array of Unicode code points-->
+<!--utf8arr_t parse_utf8_string(const string_t str);-->
+<!---->
+<!--// Function to free the memory allocated for codepoints-->
+<!--void free_utf8_arr(utf8arr_t *result);-->
+<!---->
+<!--#endif-->
+<!--```-->
 
-### Supporting UTF-8 
-
-The blessed header file for strings:
-
-```C
-#ifndef STUD_STRINGS_H
-
-#define STUD_STRINGS_H
-
-typedef struct {
-  uint32_t *codepoints; // Array of unicode code points
-  size_t length;        // length of array
-} utf8arr_t;
-
-// to get its length use `strlen ()`
-// from `#include <strings.h>`
-typedef char* string_t;
-
-// Function to count the number of bytes in a UTF-8 character
-int utf8_byte_count(char ch);
-
-// Function to extract a UTF-8 code point from the string
-uint32_t utf8_to_codepoint(const string_t str, int *char_len);
-
-// Function to parse UTF-8 string into an array of Unicode code points
-utf8arr_t parse_utf8_string(const string_t str);
-
-// Function to free the memory allocated for codepoints
-void free_utf8_arr(utf8arr_t *result);
-
-#endif
-```
-
-#### Example usage
-
-```C
-int main(void) {
-  const string_t utf8_str = "Hello, 世界! 👋"; // Sample UTF-8 encoded string
-  puts(utf8_str);
-
-  // Parse UTF-8 string
-  utf8arr_t result = parse_utf8_string(utf8_str);
-
-  // Iterate and print code points
-  printf("Parsed %lu UTF-8 characters:\n", result.length);
-  for (size_t i = 0; i < result.length; i++)
-    printf("Character %lu: U+%04X\n", i + 1, result.codepoints[i]);
-
-  free_utf8_arr(&result);
-
-  string_t string = "My string";
-  size_t str_len = strlen(string);
-
-  puts(string);
-  printf("length of string is %lu\n", str_len);
-  return 0;
-}
-```
+<!--#### Example usage-->
+<!---->
+<!--```C-->
+<!--int main(void) {-->
+<!--  const string_t utf8_str = "Hello, 世界! 👋"; // Sample UTF-8 encoded string-->
+<!--  puts(utf8_str);-->
+<!---->
+<!--  // Parse UTF-8 string-->
+<!--  utf8arr_t result = parse_utf8_string(utf8_str);-->
+<!---->
+<!--  // Iterate and print code points-->
+<!--  printf("Parsed %lu UTF-8 characters:\n", result.length);-->
+<!--  for (size_t i = 0; i < result.length; i++)-->
+<!--    printf("Character %lu: U+%04X\n", i + 1, result.codepoints[i]);-->
+<!---->
+<!--  free_utf8_arr(&result);-->
+<!---->
+<!--  string_t string = "My string";-->
+<!--  size_t str_len = strlen(string);-->
+<!---->
+<!--  puts(string);-->
+<!--  printf("length of string is %lu\n", str_len);-->
+<!--  return 0;-->
+<!--}-->
+<!--```-->
 
 ## Todo
 
-- Natural type vector
-  - The idea behind this one is that `vec_t` stores pointers to allocated values
-    but if you don't want to store something in vec from the heap (that is not allocated manually)
-    you could use something like `nvec_t` where `n` stands for `natural type`.
 - Hashmap `src/collections/hashmap`
   - `hashmap_t *init_hashmap(void)`
   - `int deinit_hashmap(hashmap_t **hashmap)`

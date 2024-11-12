@@ -10,8 +10,6 @@ typedef struct {
   void **arr;
 } vec_t;
 
-/*todo*/
-/*vec_t *init_vec(void *init_arr[]);*/
 vec_t *init_vec(void);
 
 int deinit_vec(vec_t **const vec);
@@ -19,10 +17,36 @@ int deinit_vec(vec_t **const vec);
 // push in the end of vec
 int push_vec(vec_t *vec, void *value);
 
+// macro that allocates value on heap, stores ptr in the vector
+#define push_nvec(vec_ptr, result_ptr, value, type)                            \
+  do {                                                                         \
+    if (!vec_ptr) {                                                            \
+      if (result_ptr) {                                                        \
+        int *tmp = (int *)result_ptr;                                          \
+        *tmp = 1;                                                              \
+      }                                                                        \
+    } else {                                                                   \
+      type *ptr = malloc(sizeof(type));                                        \
+      if (ptr) {                                                               \
+        *ptr = value;                                                          \
+        int i = push_vec(vec_ptr, ptr);                                        \
+        if (result_ptr) {                                                      \
+          int *tmp = (int *)result_ptr;                                        \
+          *tmp = i;                                                            \
+        }                                                                      \
+      } else {                                                                 \
+        if (result_ptr) {                                                      \
+          int *tmp = (int *)result_ptr;                                        \
+          *tmp = 1;                                                            \
+        }                                                                      \
+      }                                                                        \
+    }                                                                          \
+  } while (0)
+
 // removes last element and returns it
 void *pop_vec(vec_t *const vec);
 
-// removes element by index (shifts other elements BigO(n))
+// removes element by index
 void *remove_vec(vec_t *const vec, size_t index);
 
 // reverses the order of elements in vec
