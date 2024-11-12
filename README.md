@@ -167,7 +167,7 @@ int main(void) {
 ### Vector
 
 Initial vector capacity is `sizeof(void *)` ×16. <br/>
-Capacity grows exponentially <br/>
+Capacity grows exponentially. <br/>
 Vector header file:
 
 ```C
@@ -250,7 +250,7 @@ int main(void) {
 ### Stack
 
 Initial stack capacity is `sizeof(void *)` ×16. <br/>
-Capacity grows exponentially <br/>
+Capacity grows exponentially. <br/>
 Header file for Stack:
 
 ```C
