@@ -17,9 +17,9 @@ Basically all functions return -1 if fail and 0 if success.
     - [Bubble sorting](#bubble-sorting)
     - [Merge sorting](#merge-sorting)
 - [Collections](#collections)
-  - [Linked Lists](#linked-lists)
-  - [Vectors](#vectors)
-  - [Stacks](#stacks)
+  - [Linked List](#linked-list)
+  - [Vector](#vector)
+  - [Stack](#stack)
 <!--- [Strings](#strings)-->
 - [Todo](#todo)
 
@@ -77,7 +77,7 @@ void merge_sort(int arr[], int l, int r);
 
 ## Collections
 
-### Linked lists
+### Linked list
 
 Header file for LinkedList:
 
@@ -164,10 +164,10 @@ int main(void) {
 }
 ```
 
-### Vectors
+### Vector
 
 Initial vector capacity is `sizeof(void *)` ×16. <br/>
-Capacity grows/shrinks exponentially P0×e^(±2t) <br/>
+Capacity grows exponentially <br/>
 Vector header file:
 
 ```C
@@ -186,7 +186,7 @@ vec_t *init_vec(void);
 int deinit_vec(vec_t **const vec);
 
 // push in the end of vec
-int push_vec(vec_t *vec, void *value);
+int push_vec(vec_t *vec, void *const value);
 
 // macro that allocates value on heap, stores ptr in the vector
 #define push_nvec(vec_ptr, result_ptr, value, type)
@@ -247,7 +247,7 @@ int main(void) {
 }
 ```
 
-### Stacks
+### Stack
 
 Initial stack capacity is `sizeof(void *)` ×16. <br/>
 Capacity grows exponentially <br/>
@@ -269,8 +269,11 @@ mstack_t* init_stack(void);
 
 int deinit_stack(mstack_t **stack);
 
+// macro that allocates value on heap, stores ptr in the stack
+#define push_nstack(stack_ptr, result_ptr, value, type)
+
 // pushes an item in front of entire array (stack->values)
-int push_stack(mstack_t *const stack, void *const src);
+int push_stack(mstack_t *const stack, void *const value);
 
 // get the first item in stack
 // NOTE: don't forget to free the returned value!
@@ -283,9 +286,8 @@ void* pop_stack(mstack_t *const stack);
 
 ```C
 int main(void) {
-  ...
-  *n1 = 24;
-  *n2 = 17;
+  mytype_t *my_type = malloc(sizeof(mytype_t));
+  *my_type = ...;
 
   mstack_t *stack = init_stack();
   if (!stack) {
@@ -293,14 +295,21 @@ int main(void) {
     return -1;
   }
 
-  int result = push_stack(stack, n1);
+  if (push_stack(stack, my_type) != 0) {
+    puts("Failed to push into stack.");
+    deinit_stack(&stack);
+    return -1;
+  }
+
+  int result = 0;
+  push_nstack(stack, &result, 24, int);
   if (result != 0) {
     puts("Failed to push into stack.");
     deinit_stack(&stack);
     return -1;
   }
 
-  push_stack(stack, n2);
+  push_nstack(stack, NULL, 17, int);
 
   int *popped = (int *)pop_stack(stack);
   if (!popped) {

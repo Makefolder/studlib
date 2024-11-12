@@ -35,8 +35,8 @@ int deinit_stack(mstack_t **stack) {
 }
 
 // Appends element to the beginning (on arr[0])
-int push_stack(mstack_t *const stack, void *const src) {
-  if (!stack || !src) {
+int push_stack(mstack_t *const stack, void *const value) {
+  if (!stack || !value) {
     print_error("Failed to push into stack.");
     return -1;
   }
@@ -54,7 +54,7 @@ int push_stack(mstack_t *const stack, void *const src) {
     for (size_t i = stack->size; i > 0; i--)
       stack->values[i] = stack->values[i - 1];
 
-  stack->values[0] = src;
+  stack->values[0] = value;
   stack->size++;
   return 0;
 }

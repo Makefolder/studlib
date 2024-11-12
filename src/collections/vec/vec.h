@@ -15,7 +15,7 @@ vec_t *init_vec(void);
 int deinit_vec(vec_t **const vec);
 
 // push in the end of vec
-int push_vec(vec_t *vec, void *value);
+int push_vec(vec_t *vec, void *const value);
 
 // macro that allocates value on heap, stores ptr in the vector
 #define push_nvec(vec_ptr, result_ptr, value, type)                            \
@@ -23,7 +23,7 @@ int push_vec(vec_t *vec, void *value);
     if (!vec_ptr) {                                                            \
       if (result_ptr) {                                                        \
         int *tmp = (int *)result_ptr;                                          \
-        *tmp = 1;                                                              \
+        *tmp = -1;                                                             \
       }                                                                        \
     } else {                                                                   \
       type *ptr = malloc(sizeof(type));                                        \
@@ -37,7 +37,7 @@ int push_vec(vec_t *vec, void *value);
       } else {                                                                 \
         if (result_ptr) {                                                      \
           int *tmp = (int *)result_ptr;                                        \
-          *tmp = 1;                                                            \
+          *tmp = -1;                                                           \
         }                                                                      \
       }                                                                        \
     }                                                                          \

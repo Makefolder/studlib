@@ -17,16 +17,6 @@ static void realloc_vec(void *arr, size_t size, size_t *const capacity) {
   }
 }
 
-int main(void) {
-  vec_t *vec = init_vec();
-  int res = 0;
-  push_nvec(vec, NULL, 7, int);
-  push_nvec(vec, &res, 'c', char);
-  printf("result: %d\n", res);
-  deinit_vec(&vec);
-  return 0;
-}
-
 vec_t *init_vec(void) {
   vec_t *vec = malloc(sizeof(vec_t));
   if (!vec) {
@@ -58,7 +48,7 @@ int deinit_vec(vec_t **const vec) {
 }
 
 // Appends element to the end
-int push_vec(vec_t *vec, void *value) {
+int push_vec(vec_t *vec, void *const value) {
   if (!vec || !value) {
     print_error("Failed to push into vector.");
     return -1;
