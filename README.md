@@ -453,11 +453,6 @@ int main(void) {
 
 ## Todo
 
-- Hashmap `src/collections/hashmap`
-  - `hashmap_t *init_hashmap(void)`
-  - `int deinit_hashmap(hashmap_t **hashmap)`
-  - `int push_hashmap(hashmap_t **hashmap)`
-  - ...
 - Heap `src/collections/heap`
   - `heap_t *init_heap(void)`
   - `int deinit_heap(heap_t **heap)`
