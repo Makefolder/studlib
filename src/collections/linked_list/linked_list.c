@@ -41,7 +41,7 @@ static int _deinit_node(linkedlist_t *const list, node_t *node) {
 }
 
 // For external deallocation (only for users of this library)
-int deinit_node(node_t **node) {
+int deinit_node(node_t **const node) {
   if (!node) {
     print_error("Failed to deinitialize node of linked list.");
     return -1;
@@ -57,7 +57,7 @@ int deinit_node(node_t **node) {
   return 0;
 }
 
-linkedlist_t *init_linkedlist(size_t value_size) {
+linkedlist_t *init_linkedlist(const size_t value_size) {
   linkedlist_t *list = malloc(sizeof(linkedlist_t));
   if (!list) {
     print_error("Failed to initialize linked list.");

@@ -48,7 +48,7 @@ int deinit_vec(vec_t **const vec) {
 }
 
 // Appends element to the end
-int push_vec(vec_t *vec, void *const value) {
+int push_vec(vec_t *const vec, void *const value) {
   if (!vec || !value) {
     print_error("Failed to push into vector.");
     return -1;

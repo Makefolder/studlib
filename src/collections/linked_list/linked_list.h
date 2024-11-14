@@ -16,10 +16,10 @@ typedef struct {
 } linkedlist_t;
 
 // Deinit popped node
-int deinit_node(node_t **node);
+int deinit_node(node_t **const node);
 
 // Make linked list
-linkedlist_t *init_linkedlist(size_t value_size);
+linkedlist_t *init_linkedlist(const size_t value_size);
 
 // Destroy list and its contents
 int deinit_linkedlist(linkedlist_t **const list);
