@@ -1,15 +1,13 @@
 #ifndef STUDERR_H
 #define STUDERR_H
 
-#include <stdio.h>
-
 #ifdef LOG_ERRORS
 
-#define print_error(msg) printf("studlib: %s\n", msg)
+#define print_error(msg) frpintf(stderr, "studlib: %s\n", msg)
 
 #else
 
-#define print_error(msg) printf("")
+#define print_error(msg) fprintf(stderr, "")
 
 #endif
 

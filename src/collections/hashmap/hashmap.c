@@ -1,5 +1,5 @@
 #include "hashmap.h"
-#include <stdio.h>
+#include "../../../src/errors/studerror.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -31,11 +31,22 @@ int compare_strings(void *key1, void *key2) {
 hashmap_t *init_hashmap(const size_t capacity,
                         unsigned int (*hash_func)(void *key),
                         int (*key_cmp_func)(void *key1, void *key2)) {
-  if (!key_cmp_func || !hash_func)
+  if (!key_cmp_func || !hash_func) {
+    print_error("Failed to initialize hashmap (invalid function pointers).");
     return NULL;
+  }
 
   hashmap_t *map = (hashmap_t *)malloc(sizeof(hashmap_t));
+  if (!map) {
+    print_error("Failed to initialize hashmap.");
+    return NULL;
+  }
   map->buckets = (hashmap_node_t **)calloc(capacity, sizeof(hashmap_node_t *));
+  if (!map->buckets) {
+    free(map);
+    print_error("Failed to initialize hashmap.");
+    return NULL;
+  }
   map->size = capacity;
   map->hash_func = hash_func;
   map->key_cmp_func = key_cmp_func;
@@ -43,11 +54,17 @@ hashmap_t *init_hashmap(const size_t capacity,
 }
 
 int push_hashmap(hashmap_t *const map, void *const key, void *const value) {
-  if (!map || !key || !value)
+  if (!map || !key || !value) {
+    print_error("Failed to push into hashmap.");
     return -1;
+  }
 
   unsigned int index = map->hash_func(key) % map->size;
   hashmap_node_t *node = hashmap_node_create(key, value);
+  if (!node) {
+    print_error("Failed to push into hashmap (node initialization failed).");
+    return -1;
+  }
   hashmap_node_t *current = map->buckets[index];
 
   while (current) {
@@ -65,8 +82,10 @@ int push_hashmap(hashmap_t *const map, void *const key, void *const value) {
 }
 
 void *get_hashmap(hashmap_t *const map, void *const key) {
-  if (!map || !key)
+  if (!map || !key) {
+    print_error("Failed to get value by key.");
     return NULL;
+  }
 
   unsigned int index = map->hash_func(key) % map->size;
   hashmap_node_t *current = map->buckets[index];
@@ -77,12 +96,15 @@ void *get_hashmap(hashmap_t *const map, void *const key) {
     }
     current = current->next;
   }
-  return NULL; // Key not found
+  print_error("Failed to get value by key (key not found).");
+  return NULL;
 }
 
-int hashmap_remove(hashmap_t *const map, void *const key) {
-  if (!map || !key)
+int remove_hashmap(hashmap_t *const map, void *const key) {
+  if (!map || !key) {
+    print_error("Failed to remove from hashmap.");
     return -1;
+  }
 
   unsigned int index = map->hash_func(key) % map->size;
   hashmap_node_t *current = map->buckets[index];
@@ -105,8 +127,10 @@ int hashmap_remove(hashmap_t *const map, void *const key) {
 }
 
 int deinit_hashmap(hashmap_t **const map) {
-  if (!map || !*map)
+  if (!map || !*map) {
+    print_error("Failed deinitialize hashmap.");
     return -1;
+  }
   for (size_t i = 0; i < (*map)->size; ++i) {
     hashmap_node_t *current = (*map)->buckets[i];
     while (current) {

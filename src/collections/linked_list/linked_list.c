@@ -1,5 +1,6 @@
 #include "linked_list.h"
 #include "../../errors/studerror.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static node_t *_init_node(void *const value) {

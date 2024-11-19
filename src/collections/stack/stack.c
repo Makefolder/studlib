@@ -1,5 +1,6 @@
 #include "stack.h"
 #include "../../errors/studerror.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 #define INITIAL_STACK_SIZE 16
