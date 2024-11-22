@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-g -O0 -Wall -Werror -Wextra -pedantic -std=c99
+CFLAGS=-Wall -Werror -Wextra -O0 -g -pedantic -std=c99
 LIBNAME=studlib
 LIBFILE=lib$(LIBNAME).a
 
