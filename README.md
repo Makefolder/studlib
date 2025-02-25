@@ -21,8 +21,7 @@ Basically all functions return -1 if fail and 0 if success.
   - [Vector](#vector)
   - [Hashmap](#hashmap)
   - [Stack](#stack)
-<!--- [Strings](#strings)-->
-- [Todo](#todo)
+  - [String](#string)
 
 ## Algorithms
 
@@ -390,66 +389,9 @@ int main(void) {
 }
 ```
 
-<!--## Strings-->
-<!---->
-<!--### Supporting UTF-8 -->
-<!---->
-<!--The blessed header file for strings:-->
-<!---->
-<!--```C-->
-<!--#ifndef STUD_STRINGS_H-->
-<!---->
-<!--#define STUD_STRINGS_H-->
-<!---->
-<!--typedef struct {-->
-<!--  uint32_t *codepoints; // Array of unicode code points-->
-<!--  size_t length;        // length of array-->
-<!--} utf8arr_t;-->
-<!---->
-<!--// to get its length use `strlen ()`-->
-<!--// from `#include <strings.h>`-->
-<!--typedef char* string_t;-->
-<!---->
-<!--// Function to count the number of bytes in a UTF-8 character-->
-<!--int utf8_byte_count(char ch);-->
-<!---->
-<!--// Function to extract a UTF-8 code point from the string-->
-<!--uint32_t utf8_to_codepoint(const string_t str, int *char_len);-->
-<!---->
-<!--// Function to parse UTF-8 string into an array of Unicode code points-->
-<!--utf8arr_t parse_utf8_string(const string_t str);-->
-<!---->
-<!--// Function to free the memory allocated for codepoints-->
-<!--void free_utf8_arr(utf8arr_t *result);-->
-<!---->
-<!--#endif-->
-<!--```-->
+## String
 
-<!--#### Example usage-->
-<!---->
-<!--```C-->
-<!--int main(void) {-->
-<!--  const string_t utf8_str = "Hello, 世界! 👋"; // Sample UTF-8 encoded string-->
-<!--  puts(utf8_str);-->
-<!---->
-<!--  // Parse UTF-8 string-->
-<!--  utf8arr_t result = parse_utf8_string(utf8_str);-->
-<!---->
-<!--  // Iterate and print code points-->
-<!--  printf("Parsed %lu UTF-8 characters:\n", result.length);-->
-<!--  for (size_t i = 0; i < result.length; i++)-->
-<!--    printf("Character %lu: U+%04X\n", i + 1, result.codepoints[i]);-->
-<!---->
-<!--  free_utf8_arr(&result);-->
-<!---->
-<!--  string_t string = "My string";-->
-<!--  size_t str_len = strlen(string);-->
-<!---->
-<!--  puts(string);-->
-<!--  printf("length of string is %lu\n", str_len);-->
-<!--  return 0;-->
-<!--}-->
-<!--```-->
+WIP
 
 ## Todo
 
