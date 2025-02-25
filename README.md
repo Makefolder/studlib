@@ -9,40 +9,12 @@ Simple "STD" lib for C. <br />
 Basically all functions return -1 if fail and 0 if success.
 
 ### Navigation
-- [Algorithms](#algorithms)
-  - [Search](#searching)
-    - [Linear search](#linear-search)
-    - [Binary search](#binary-search)
-  - [Sorting](#sorting)
-    - [Bubble sorting](#bubble-sorting)
-    - [Merge sorting](#merge-sorting)
 - [Collections](#collections)
   - [Linked List](#linked-list)
   - [Vector](#vector)
   - [Hashmap](#hashmap)
   - [Stack](#stack)
   - [String](#string)
-
-## Algorithms
-
-## Searching
-
-### Linear search
-
-These algorithms return `index` of the target in arr. If fails to find, these return `-1`. <br />
-
-Header file:
-
-```C
-// Returns index of the target in arr. If fails to find, returns -1
-int linear_search(const int arr[], size_t len, int target);
-```
-
-### Binary search
-
-```C
-int binary_search(const int arr[], int low, int high, int target);
-```
 
 ## Sorting
 
