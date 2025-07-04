@@ -11,7 +11,4 @@
 
 #endif
 
-// just an idea
-/*typedef enum { SUCCESS, FAILURE } statuscode_t;*/
-
 #endif

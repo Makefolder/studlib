@@ -124,6 +124,8 @@ typedef struct {
 
 vec_t *init_vec(void);
 
+vec_t *init_reserve_vec(size_t capacity);
+
 int deinit_vec(vec_t **const vec);
 
 // push in the end of vec
