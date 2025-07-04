@@ -16,37 +16,6 @@ Basically all functions return -1 if fail and 0 if success.
   - [Stack](#stack)
   - [String](#string)
 
-## Sorting
-
-### Bubble sorting
-
-Note: changes the passed array.
-
-```C
-int bubble_sort(int *const arr, size_t size);
-```
-
-### Merge sorting
-
-Usage:
-
-```C
-int main(void) {
-  int arr[] = { 10, 2, 5, 1, 0, 2, 5, 10, 2, 5, 1, 0, 45, 45, 821, 1, 9, 51, 6, 8 };
-  size_t len = sizeof(arr) / sizeof(arr[0]);
-
-  merge_sort(arr, 0, len - 1); // arr[] gets sorted
-  ...
-  return 0;
-}
-```
-
-Header file:
-
-```C
-void merge_sort(int arr[], int l, int r);
-```
-
 ## Collections
 
 ### Linked list
@@ -154,6 +123,8 @@ typedef struct {
 } vec_t;
 
 vec_t *init_vec(void);
+
+vec_t *init_reserve_vec(size_t capacity);
 
 int deinit_vec(vec_t **const vec);
 

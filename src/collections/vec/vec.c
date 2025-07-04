@@ -17,14 +17,16 @@ static void realloc_vec(void *arr, size_t size, size_t *const capacity) {
   }
 }
 
-vec_t *init_vec(void) {
+vec_t *init_vec(void) { return init_reserve_vec(INITIAL_VEC_CAPACITY); }
+
+vec_t *init_reserve_vec(size_t capacity) {
   vec_t *vec = malloc(sizeof(vec_t));
   if (!vec) {
     print_error("Failed to initialize vector.");
     return NULL;
   }
   vec->size = 0;
-  vec->capacity = INITIAL_VEC_CAPACITY;
+  vec->capacity = capacity;
   vec->arr = malloc(sizeof(void *) * vec->capacity);
   if (!vec->arr) {
     print_error("Failed to initialize vector's internal array.");
