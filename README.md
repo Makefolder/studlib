@@ -14,7 +14,6 @@ Basically all functions return -1 if fail and 0 if success.
   - [Vector](#vector)
   - [Hashmap](#hashmap)
   - [Stack](#stack)
-  - [String](#string)
 
 ## Collections
 
@@ -332,10 +331,6 @@ int main(void) {
 }
 ```
 
-## String
-
-WIP
-
 ## Todo
 
 - Heap `src/collections/heap`
@@ -355,9 +350,9 @@ WIP
 
 If anyone uses this library, please report any bugs or memory leaks!
 
-<div align="center">
+<div align="left">
   <a href="https://github.com/Makefolder/studlib/issues/new">
-    <b>Report</b>
+    <b>Report a bug</b>
   <a/>
 <div/>
 
